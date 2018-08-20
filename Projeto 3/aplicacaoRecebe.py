@@ -10,6 +10,8 @@
 
 print("comecou")
 
+#agora aqui
+
 from enlace import *
 import time
 
