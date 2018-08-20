@@ -10,6 +10,8 @@
 
 print("comecou")
 
+#aokdaopskdp
+
 from enlace import *
 import time
 from tkinter import filedialog, ttk
