@@ -58,7 +58,7 @@ def main():
     txBuffer = img.read()
     txLen    = len(txBuffer)
     print("Tempo esperado")
-    print("{} ms".format(txLen*10/com.baudrate))
+    print("{} s".format(txLen*10/com.baudrate))
 
     # Transmite dado
     print("tentado transmitir .... {} bytes".format(txLen))
