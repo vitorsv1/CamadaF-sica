@@ -1,20 +1,20 @@
 import math
 
-tipoEncode = 'utf-8'
-imgFile = "C:/Users/Mateus Enrico/Documents/Insper/CamadaFisica/Projeto 3/img/x.png"
-img = open(imgFile,'rb')
-dado = img.read()
-
-def empacota(dado):
+def main(dado):
+    tipoEncode = "utf-8"
     sizeInteiro = len(dado)
     maxSize = 255 # 8 bits pra representar o tamanho do payload
 
-    number = math.ceil(len(dado)/maxSize)
+    number = math.ceil(sizeInteiro/maxSize)
     count = number
     envio = bytearray()
-    print('vai comecar')
+
     while count != 0:
         msg = bytearray()
+        head = bytearray()
+        pay = bytearray()
+        eop = bytearray()
+
         atual = number - count
 
         # PAYLOAD
@@ -27,7 +27,7 @@ def empacota(dado):
             size = maxSize
         else:
             carga = dado[(maxSize*atual+adendo):]
-            size = len(dado) - (number - 1)*maxSize
+            size = sizeInteiro - (number - 1)*maxSize
 
         # HEAD
         tamanho = size
@@ -36,18 +36,23 @@ def empacota(dado):
         info = 'final'
 
         # MONTANDO #
-        msg.extend(bytes(tamanho)) 
-        msg.extend(bytes(atual))
-        msg.extend(bytes(number))
+        head.extend(tamanho.to_bytes(1,'big')) 
+        head.extend(atual.to_bytes(1,'big'))
+        head.extend(number.to_bytes(1,'big'))
 
-        msg.extend(bytes(carga))
+        pay.extend(bytes(carga))
 
-        msg.extend(bytes(info,encoding=tipoEncode))
+        eop.extend(bytes(info,tipoEncode))
 
-
+        msg.extend(head)
+        msg.extend(pay)
+        msg.extend(eop)
         # ADICIONA A VARIAVEL PARA O BUFFER
         envio.extend(msg)
-    
-    print(envio)
 
-empacota(dado)
+        count = count - 1
+    
+    return(envio)
+
+if __name__ == "__main__":
+    main()
