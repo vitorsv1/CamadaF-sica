@@ -3,20 +3,23 @@
 import math
 
 def desempacota(dado):
-    # Info de HEAD
+    # Info
     headSize = 4
+    eopSize = 4
   
     # Info de EOP
-    confirmaEop = [hex(255), hex(254), hex(253), hex(252)]
+    confirmaEop = [255, 254, 253, 252]
   
     count = 0
-    head = []
-    pay = []
-    eop = []
+    head = bytearray()
+    pay = bytearray()
+    eop = bytearray()
   
     for i in dado:
         while count < headSize:
-            head.append(i)
+            head.extend(bytes(i))
+            print(i)
+            print(head)
             count += 1
         tamanho = head[0] * 256 + head[1]
         pacote = head[2]
@@ -25,9 +28,9 @@ def desempacota(dado):
     count = 0
     for i in dado:    
         if count >= headSize & count < (headSize + tamanho):
-            pay.append(i)
-        elif count >= (headSize + tamanho) & count < (tamanho + 2*headSize):
-            eop.append(i)
+            pay.extend(bytes(i))
+        elif count >= (headSize + tamanho) & count < (tamanho + headSize + eopSize):
+            eop.extend(bytes(i))
         else:
             break
         count += 1
@@ -37,18 +40,28 @@ def desempacota(dado):
     corretoEop = False
     corretoPay = False
 
-    for i in len(eop):
+    for i in range(len(eop)):
         if eop[i] == confirmaEop[i]:
             pontos += 1 
     if pontos == 4:
         corretoEop = True
 
-    if len(head) + len(pay) + len(eop) == tamanho + 2*headSize:
+    if len(head) + len(pay) + len(eop) == tamanho + headSize + eopSize:
         corretoPay == True
     
-    if corretoPay == True & corretoEop == True:
+    if corretoPay & corretoEop:
         correto = True
 
+    if correto:
+        print("envio correto")
+        return pay
+    else:
+        if not corretoPay:
+            print("erro no tamanho do payload")
+        else:
+            print("erro no EOP")
+        return -1
+        
 def empacota(dado):
     tipoEncode = "utf-8"
     sizeInteiro = len(dado)
