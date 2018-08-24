@@ -24,7 +24,11 @@ import time
 
 #serialName = "/dev/ttyACM0"           # Ubuntu (variacao de)
 #serialName = "/dev/tty.usbmodem1411" # Mac    (variacao de)
+<<<<<<< HEAD
 serialName = "COM4"                  # Windows(variacao de)
+=======
+serialName = "COM7"                  # Windows(variacao de)
+>>>>>>> 612c5c3681b58351c90918db70388ee8835091d5
 
 print("porta COM aberta com sucesso")
 

@@ -10,14 +10,12 @@
 
 print("comecou")
 
-#aokdaopskdp
+#agora aqui
 
 from enlace import *
 import time
-from tkinter import filedialog, ttk
-from tkinter import *
-from tkinter.filedialog import askopenfilename
- 
+import pacote
+
 # voce deverá descomentar e configurar a porta com através da qual ira fazer a
 # comunicaçao
 # Serial Com Port
@@ -29,6 +27,7 @@ from tkinter.filedialog import askopenfilename
 #serialName = "/dev/tty.usbmodem1411" # Mac    (variacao de)
 serialName = "COM7"                  # Windows(variacao de)
 
+print("porta COM aberta com sucesso")
 
 def main():
     # Inicializa enlace ... variavel com possui todos os metodos e propriedades do enlace, que funciona em threading
@@ -40,33 +39,49 @@ def main():
     #verificar que a comunicação foi aberta
     print("comunicação aberta")
 
-    #Gerando dados
-    print ("gerando dados para transmissao :")
-  
-    print("Carregando imagem")
-    # Lendo a imagem
-    def OpenFile():
-        name = askopenfilename(initialdir="C:/Users/Batman/Documents/Programming/tkinter/",
-                            filetypes =(("PNG Files", "*.png"),("All Files","*.*")),
-                            title = "Choose a file."
-                            )
-        print (name)
-    
-    #Using try in case user types in unknown file or closes without choosing a file.
-        return name 
-    imgLida = OpenFile() 
+    #imgLida = "C:/Users/vitor/Dropbox/Insper/2018.2/Camada Física/Projeto 1/img/madfox.png"
 
-    img = open(imgLida,'rb')
-    txBuffer = img.read()
-    txLen    = len(txBuffer)
-    print("Tempo esperado")
-    print("{} s".format(txLen*10/com.baudrate))
+    imgEscrita = "C:/Users/vitor/Dropbox/Insper/2018.2/Camada Física/CamadaFisica/Projeto 3/img/recebido.png"
+
+    # a seguir ha um exemplo de dados sendo carregado para transmissao
+    # voce pode criar o seu carregando os dados de uma imagem. Tente descobrir
+    #como fazer isso
+    
+    #Recebendo dado
+    #print("Carregando imagem")
+    # Lendo a imagem
+    #img = open(imgLida,'rb')
+    #txBuffer = img.read()
+    #txLen    = len(txBuffer)
+    #print(txLen)
 
     # Transmite dado
-    print("tentado transmitir .... {} bytes".format(txLen))
-    com.sendData(txBuffer)
+    #print("tentado transmitir .... {} bytes".format(txLen))
+    #com.sendData(txBuffer)
+
+        
     # Atualiza dados da transmissão
-    txSize = com.tx.getStatus()
+    #txSize = com.tx.getStatus()
+
+
+    #Nome da imagem a ser recebida
+    #imgEscrita = ""
+
+    # Faz a recepção dos dados
+    print ("Recebendo dados .... ")
+    
+    while not com.rx.getIsEmpty:
+        pass
+        
+    rxBuffer = com.rx.getNData()
+
+    
+    # Criando imagem nova
+    print ("Testando rxbuffer...")
+    print (rxBuffer)
+    imgNova = open(imgEscrita,'wb')
+    imgNova.write(rxBuffer)
+    imgNova.close()
 
     # Encerra comunicação
     print("-------------------------")
