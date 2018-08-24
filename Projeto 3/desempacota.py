@@ -16,6 +16,7 @@ def main(dado):
         while count < headSize:
             head.append(i)
             count += 1
+<<<<<<< HEAD
         tamanho = head[0] * 256 + head[1]
         pacote = head[2]
         maxPacotes = head[3]
@@ -23,6 +24,15 @@ def main(dado):
     count = 0
     for i in dado:    
         if count >= headSize & count < (headSize + tamanho):
+=======
+        #tamanho = ??
+        #pacote = ??
+        #maxPacotes = ??
+
+    count = 0
+    for i in dado:    
+        if count >= headSize && count < (headSize + tamanho):
+>>>>>>> ba63b3eb16ad239cf23522f4b3d15e5dadd42588
             pay.append(i)
         elif count >= (headSize + tamanho) & count < (tamanho + 2*headSize):
             eop.append(i)
