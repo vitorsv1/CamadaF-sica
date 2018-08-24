@@ -14,6 +14,7 @@ print("comecou")
 
 from enlace import *
 import time
+import pacote
 
 # voce deverá descomentar e configurar a porta com através da qual ira fazer a
 # comunicaçao
@@ -40,7 +41,7 @@ def main():
 
     #imgLida = "C:/Users/vitor/Dropbox/Insper/2018.2/Camada Física/Projeto 1/img/madfox.png"
 
-    imgEscrita = "C:/Users/vitor/Dropbox/Insper/2018.2/Camada Física/Projeto 2 - ClientServer/img/recebido.png"
+    imgEscrita = "C:/Users/vitor/Dropbox/Insper/2018.2/Camada Física/CamadaFisica/Projeto 3/img/recebido.png"
 
     # a seguir ha um exemplo de dados sendo carregado para transmissao
     # voce pode criar o seu carregando os dados de uma imagem. Tente descobrir
@@ -76,7 +77,8 @@ def main():
 
     
     # Criando imagem nova
-    print ("Criando nova imagem...")
+    print ("Testando rxbuffer...")
+    print (rxBuffer)
     imgNova = open(imgEscrita,'wb')
     imgNova.write(rxBuffer)
     imgNova.close()
