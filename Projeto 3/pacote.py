@@ -2,7 +2,7 @@ import math
 
 def desempacota(dado):
     # Info
-    headSize = 3
+    headSize = 5
     eopSize = 4
   
     # Info de EOP
@@ -14,38 +14,34 @@ def desempacota(dado):
     eop = bytearray()
   
     for i in dado:
-        while count < headSize:
-            head.extend(bytes(i))
-            print(i)
-            print(head)
+        if count < headSize:
+            #print(i)
+            if count == 0:
+                head.extend(i.to_bytes(1,'big'))
+            else:
+                head.extend(i.to_bytes(2,'big'))
             count += 1
-        tamanho = head[0] * 256 + head[1]
-        pacote = head[2]
-        maxPacotes = head[3]
-
-    count = 0
-    for i in dado:    
-        if count >= headSize & count < (headSize + tamanho):
-            pay.extend(bytes(i))
-        elif count >= (headSize + tamanho) & count < (tamanho + headSize + eopSize):
-            eop.extend(bytes(i))
-        else:
-            break
-        count += 1
+    tamanho = head[0]
+    pacote = head[1] * 256 + head[2]
+    maxPacotes = head[3] * 256 + head[4]
+    #print(head)
     
-    pontos = 0
+    count = 1
+    point = 0
+    flagEop = 0
     correto = False
     corretoEop = False
     corretoPay = False
 
-    for i in range(len(eop)):
-        if eop[i] == confirmaEop[i]:
-            pontos += 1 
-    if pontos == 4:
-        corretoEop = True
+    for i in range(len(dado)):
+        if i + 3 < len(dado):
+            if dado[i] == 255 and dado[i+1] == 254 and dado[i+2] == 253 and dado[i+3] == 252:
+                corretoEop = True
+                flagEop = i
+                break
 
-    if len(head) + len(pay) + len(eop) == tamanho + headSize + eopSize:
-        corretoPay == True
+    if (flagEop - headSize) == tamanho:
+        corretoPay = True
     
     if corretoPay & corretoEop:
         correto = True

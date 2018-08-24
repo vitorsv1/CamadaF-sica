@@ -28,6 +28,7 @@ class fisica(object):
         self.stop        = serial.STOPBITS_ONE
         self.timeout     = 0.1
         self.rxRemain    = b""
+        self.tempo       = 0
 
     def open(self):
         """ Opens serial port and configure it
@@ -80,6 +81,7 @@ class fisica(object):
         tempo = stop - start
         print("Tempo efetivo")
         print(tempo)
+        self.tempo = tempo
         return(nTx/2)
 
     def read(self, nBytes):
