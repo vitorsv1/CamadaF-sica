@@ -125,5 +125,5 @@ def empacota(dado):
         envio.extend(msg)
         
         count = count - 1
-    print(envio)
+
     return(envio)
