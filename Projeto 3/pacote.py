@@ -27,35 +27,55 @@ def desempacota(dado):
     #print(head)
     
     count = 1
-    point = 0
     flagEop = 0
     correto = False
     corretoEop = False
     corretoPay = False
+    flagStuff = []
+    stuff = False
 
     for i in range(len(dado)):
         if i + 3 < len(dado):
-            if dado[i] == 255 and dado[i+1] == 254 and dado[i+2] == 253 and dado[i+3] == 252:
-                corretoEop = True
-                flagEop = i
-                break
+            if dado[i] == 255 and dado[i+1] == 254 and dado[i+2] == 253 and dado[i+3] == 252: #0xFF 0xFE 0xFD 0xFC
+                if i - 2 > 0:
+                    if dado[i-1] == 119 and dado[i-2] == 204: #2 bytes, 0x77 e 0xCC
+                        stuff = True
+                        flagStuff.append(i)
+                    else:
+                        corretoEop = True
+                        flagEop = i
+                        break
 
-    if (flagEop - headSize) == tamanho:
+    dadoFiltro = bytearray()
+
+    count = 0
+    corretoStuff = False
+    if stuff:
+        for i in flagStuff:
+            dadoFiltro = dado[:i-2*-count] + dado[i+2-2*count:]
+            count += 1
+
+
+    if count == len(flagStuff):
+        corretoStuff = True
+
+    if (i - headSize) == tamanho:
         corretoPay = True
-    
-    if corretoPay & corretoEop:
+
+    if corretoPay and corretoEop and corretoStuff:
         correto = True
 
-    if corretoPay:
-        pay = dado[headSize-1:flagEop]
     if correto:
+        pay = dado[headSize:flagEop]
         print("envio correto")
         return pay
     else:
         if not corretoPay:
             print("erro no tamanho do payload")
-        else:
+        elif not corretoEop:
             print("erro no EOP")
+        elif not corretoStuff:
+            print("erro na remocao do stuff")
         return -1
         
 def empacota(dado):
