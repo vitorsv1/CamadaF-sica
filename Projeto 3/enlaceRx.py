@@ -91,7 +91,8 @@ class RX(object):
         b           = self.buffer[0:nData]
         self.buffer = self.buffer[nData:]
         self.threadResume()
-        return(b)
+        dados = self.desempacota(b)
+        return(dados)
 
     def getNData(self):
         """ Read N bytes of data from the reception buffer
