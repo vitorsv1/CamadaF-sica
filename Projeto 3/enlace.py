@@ -56,7 +56,7 @@ class enlace(object):
         """
         pacote = self.tx.empacota(data)
         self.tx.sendBuffer(pacote)
-        time.sleep(.5)
+        time.sleep(1)
         throughput = len(pacote)/self.fisica.tempo
         print("Throughput: {} B/s".format(throughput))
 

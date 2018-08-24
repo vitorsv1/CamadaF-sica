@@ -46,6 +46,8 @@ def desempacota(dado):
     if corretoPay & corretoEop:
         correto = True
 
+    if corretoPay:
+        pay = dado[headSize-1:flagEop]
     if correto:
         print("envio correto")
         return pay

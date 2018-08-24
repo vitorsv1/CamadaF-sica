@@ -91,8 +91,7 @@ class RX(object):
         b           = self.buffer[0:nData]
         self.buffer = self.buffer[nData:]
         self.threadResume()
-        dados = self.desempacota(b)
-        return(dados)
+        return(b)
 
     def getNData(self):
         """ Read N bytes of data from the reception buffer
@@ -110,7 +109,9 @@ class RX(object):
             size = self.getBufferLen()
             time.sleep(0.3)
             print("Recebendo...")
-        return(self.getBuffer(size))
+        pacotao = self.getBuffer(size)
+        dados = self.desempacota(pacotao)
+        return(dados)
 
 
     def clearBuffer(self):
@@ -164,6 +165,9 @@ class RX(object):
         
         if corretoPay & corretoEop:
             correto = True
+        
+        if corretoPay:
+            pay = dado[headSize-1:flagEop]
 
         if correto:
             print("envio correto")
