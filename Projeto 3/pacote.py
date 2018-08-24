@@ -1,10 +1,8 @@
-# LER 65536 BITS!!!!!!!!!!!!!!!!!!!! O tamanho reflete na representacao em hexa, mas nao na contagem necessaria
-
 import math
 
 def desempacota(dado):
     # Info
-    headSize = 4
+    headSize = 3
     eopSize = 4
   
     # Info de EOP
@@ -65,12 +63,13 @@ def desempacota(dado):
 def empacota(dado):
     tipoEncode = "utf-8"
     sizeInteiro = len(dado)
-    maxSize = 65535 # 16 bits pra representar o tamanho do payload
+    maxSize = 255 # 16 bits pra representar o tamanho do payload
 
     number = math.ceil(sizeInteiro/maxSize)
     count = number
     envio = bytearray()
-
+    print(sizeInteiro)
+    print(number)
     while count != 0:
         msg = bytearray()
         head = bytearray()
@@ -107,10 +106,10 @@ def empacota(dado):
         quarto = 252
 
         # MONTANDO #
-        head.extend(size.to_bytes(2,'big')) 
-        head.extend(atual.to_bytes(1,'big'))
-        head.extend((number-1).to_bytes(1,'big'))
-
+        head.extend(size.to_bytes(1,'big')) 
+        head.extend(atual.to_bytes(2,'big'))
+        head.extend((number-1).to_bytes(2,'big'))
+        
         pay.extend(bytes(carga))
 
         eop.extend(primeiro.to_bytes(1,'big'))
@@ -125,5 +124,5 @@ def empacota(dado):
         envio.extend(msg)
         
         count = count - 1
-
+    overhead = maxSize / (5 + maxSize + 4)
     return(envio)
