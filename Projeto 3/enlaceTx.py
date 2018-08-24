@@ -7,6 +7,9 @@
 #  Camada de Enlace
 ####################################################
 
+# Importa pacote
+import pacote
+
 # Importa pacote de tempo
 import time
 
@@ -84,9 +87,12 @@ class TX(object):
         #print("O tamanho transmitido. Impressao fora do thread {}" .format(self.transLen))
         return(self.transLen)
         
-
     def getIsBussy(self):
         """ Return true if a transmission is ongoing
         """
         return(self.threadMutex)
+
+#----------------Metodos-Novos----------------#
+    def empacota(self, dado):
+        pass
 

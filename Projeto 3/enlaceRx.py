@@ -117,7 +117,9 @@ class RX(object):
         """
         self.buffer = b""
 
-    #----------------Receber----------------
+    #----------------Metodos-Novos----------------#
+    def desempacota(self):
+        pass
 
 
 
