@@ -24,21 +24,21 @@ def main(dado):
     count = 0
     head = []
     pay = []
-    eop []
+    eop = []
   
     for i in dado:
         while count < headSize:
             head.append(i)
             count += 1
-        tamanho = ??
-        pacote = ??
-        maxPacotes = ??
+        tamanho = head[0] * 256 + head[1]
+        pacote = head[2]
+        maxPacotes = head[3]
 
     count = 0
-    for i in dado    
-        if count >= headSize && count < (headSize + tamanho):
+    for i in dado:    
+        if count >= headSize & count < (headSize + tamanho):
             pay.append(i)
-        elif count >= (headSize + tamanho) && count < (tamanho + 2*headSize):
+        elif count >= (headSize + tamanho) & count < (tamanho + 2*headSize):
             eop.append(i)
         else:
             break
@@ -58,7 +58,7 @@ def main(dado):
     if len(head) + len(pay) + len(eop) == tamanho + 2*headSize:
         corretoPay == True
     
-    if corretoPay == True && corretoEop == True:
+    if corretoPay == True & corretoEop == True:
         correto = True
 
 
