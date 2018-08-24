@@ -24,18 +24,18 @@ def main(dado):
     count = 0
     head = []
     pay = []
-    eop []
+    eop = []
   
     for i in dado:
         while count < headSize:
             head.append(i)
             count += 1
-        tamanho = ??
-        pacote = ??
-        maxPacotes = ??
+        #tamanho = ??
+        #pacote = ??
+        #maxPacotes = ??
 
     count = 0
-    for i in dado    
+    for i in dado:    
         if count >= headSize && count < (headSize + tamanho):
             pay.append(i)
         elif count >= (headSize + tamanho) && count < (tamanho + 2*headSize):
