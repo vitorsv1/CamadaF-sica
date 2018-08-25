@@ -3,10 +3,6 @@ import math
 def desempacota(dado):
     # Info
     headSize = 5
-    eopSize = 4
-  
-    # Info de EOP
-    confirmaEop = [255, 254, 253, 252]
   
     count = 0
     head = bytearray()

@@ -94,7 +94,7 @@ class TX(object):
         return(self.threadMutex)
 
 #----------------Metodos-Novos----------------#
-    def empacota(self, dado):
+    def empacota(self,dado):
         tipoEncode = "utf-8"
         sizeInteiro = len(dado)
         maxSize = 255 # 16 bits pra representar o tamanho do payload
@@ -102,8 +102,7 @@ class TX(object):
         number = math.ceil(sizeInteiro/maxSize)
         count = number
         envio = bytearray()
-        print(sizeInteiro)
-        print(number)
+    
         while count != 0:
             msg = bytearray()
             head = bytearray()
@@ -128,7 +127,27 @@ class TX(object):
 
                     size = maxSize
                     carga = dado[(maxSize*atual+adendo):(maxSize*(atual+1))]
+                
+            flagStuff = []
+            stuff = False
 
+            for i in range(len(dado)):
+                if i + 3 < len(dado):
+                    if dado[i] == 255 and dado[i+1] == 254 and dado[i+2] == 253 and dado[i+3] == 252: #0xFF 0xFE 0xFD 0xFC
+                        flagStuff.append(i)
+                        stuff = True
+            
+            cargaFiltro = bytearray()
+            contador = 0
+            primeiroStuff = 221
+            segundoStuff = 238
+            if stuff: 
+                for i in flagStuff:
+                    cargaFiltro = carga[:i-2*contador]
+                    cargaFiltro.extend(primeiroStuff.to_bytes(1,'big'))
+                    cargaFiltro.extend(segundoStuff.to_bytes(1,'big'))
+                    cargaFiltro += carga[i-2*contador:]
+                    contador += 1
 
             # HEAD
             #So foi dado extend
@@ -143,8 +162,8 @@ class TX(object):
             head.extend(size.to_bytes(1,'big')) 
             head.extend(atual.to_bytes(2,'big'))
             head.extend((number-1).to_bytes(2,'big'))
-            
-            pay.extend(bytes(carga))
+
+            pay.extend(bytes(cargaFiltro))
 
             eop.extend(primeiro.to_bytes(1,'big'))
             eop.extend(segundo.to_bytes(1,'big'))
@@ -158,9 +177,9 @@ class TX(object):
             envio.extend(msg)
             
             count = count - 1
+            #print(count)
 
         overhead = maxSize / (5 + maxSize + 4)
         print("Overhead: {}%".format(overhead*100))
 
         return(envio)
-

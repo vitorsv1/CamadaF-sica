@@ -123,10 +123,6 @@ class RX(object):
     def desempacota(self,dado):
         # Info
         headSize = 5
-        eopSize = 4
-    
-        # Info de EOP
-        confirmaEop = [255, 254, 253, 252]
     
         count = 0
         head = bytearray()
@@ -147,38 +143,57 @@ class RX(object):
         #print(head)
         
         count = 1
-        point = 0
         flagEop = 0
         correto = False
         corretoEop = False
         corretoPay = False
+        flagStuff = []
+        stuff = False
 
         for i in range(len(dado)):
             if i + 3 < len(dado):
-                if dado[i] == 255 and dado[i+1] == 254 and dado[i+2] == 253 and dado[i+3] == 252:
-                    corretoEop = True
-                    flagEop = i
-                    break
+                if dado[i] == 255 and dado[i+1] == 254 and dado[i+2] == 253 and dado[i+3] == 252: #0xFF 0xFE 0xFD 0xFC
+                    if i - 2 > 0:
+                        if dado[i-2] == 221 and dado[i-1] == 238: #2 bytes, 0xDD e 0xEE
+                            stuff = True
+                            flagStuff.append(i-2)
+                        else:
+                            corretoEop = True
+                            flagEop = i
+                            break
+
+        dadoFiltro = bytearray()
+
+        count = 0
+        corretoStuff = False
+
+        if stuff:
+            for i in flagStuff:
+                dadoFiltro = dado[:i-2*count] + dado[i+2-2*count:]
+                count += 1
+        else:
+            dadoFiltro = dado
+
+        flagEop -= count * 2
+
+        if count == len(flagStuff):
+            corretoStuff = True
 
         if (flagEop - headSize) == tamanho:
             corretoPay = True
-        
-        if corretoPay & corretoEop:
+
+        if corretoPay and corretoEop and corretoStuff:
             correto = True
-        
-        if corretoPay:
-            pay = dado[headSize-1:flagEop]
 
         if correto:
+            pay = dadoFiltro[headSize:flagEop]
             print("envio correto")
             return pay
         else:
             if not corretoPay:
                 print("erro no tamanho do payload")
-            else:
+            elif not corretoEop:
                 print("erro no EOP")
+            elif not corretoStuff:
+                print("erro na remocao do stuff")
             return -1
-
-
-
-
