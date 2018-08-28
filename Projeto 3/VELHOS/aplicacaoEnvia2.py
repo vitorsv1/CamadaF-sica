@@ -10,11 +10,15 @@
 
 print("comecou")
 
-#agora aqui
+#aokdaopskdp
 
 from enlace import *
 import time
-
+import pacote
+from tkinter import filedialog, ttk
+from tkinter import *
+from tkinter.filedialog import askopenfilename
+ 
 # voce deverá descomentar e configurar a porta com através da qual ira fazer a
 # comunicaçao
 # Serial Com Port
@@ -24,13 +28,8 @@ import time
 
 #serialName = "/dev/ttyACM0"           # Ubuntu (variacao de)
 #serialName = "/dev/tty.usbmodem1411" # Mac    (variacao de)
-<<<<<<< HEAD
-serialName = "COM4"                  # Windows(variacao de)
-=======
-serialName = "COM7"                  # Windows(variacao de)
->>>>>>> 612c5c3681b58351c90918db70388ee8835091d5
+serialName = "COM5"                  # Windows(variacao de)
 
-print("porta COM aberta com sucesso")
 
 def main():
     # Inicializa enlace ... variavel com possui todos os metodos e propriedades do enlace, que funciona em threading
@@ -42,48 +41,34 @@ def main():
     #verificar que a comunicação foi aberta
     print("comunicação aberta")
 
-    #imgLida = "C:/Users/vitor/Dropbox/Insper/2018.2/Camada Física/Projeto 1/img/madfox.png"
-
-    imgEscrita =  "C:/Users/Mateus Enrico/Documents/Insper/CamadaFisica/Projeto 3/img/recebido.png"
-
-    # a seguir ha um exemplo de dados sendo carregado para transmissao
-    # voce pode criar o seu carregando os dados de uma imagem. Tente descobrir
-    #como fazer isso
-    
-    #Recebendo dado
-    #print("Carregando imagem")
+    #Gerando dados
+    print ("gerando dados para transmissao :")
+  
+    print("Carregando imagem")
     # Lendo a imagem
-    #img = open(imgLida,'rb')
-    #txBuffer = img.read()
-    #txLen    = len(txBuffer)
-    #print(txLen)
+    def OpenFile():
+        name = askopenfilename(initialdir="C:/Users/Batman/Documents/Programming/tkinter/",
+                            filetypes =(("PNG Files", "*.png"),("All Files","*.*")),
+                            title = "Choose a file."
+                            )
+        print (name)
+    
+    #Using try in case user types in unknown file or closes without choosing a file.
+        return name 
+    imgLida = OpenFile() 
+
+    img = open(imgLida,'rb')
+    txBuffer = pacote.empacota(img.read())
+    txLen    = len(txBuffer)
+    print(txBuffer[0:20])
+    print("Tempo esperado")
+    print("{} s".format(txLen*10/com.baudrate))
 
     # Transmite dado
-    #print("tentado transmitir .... {} bytes".format(txLen))
-    #com.sendData(txBuffer)
-
-        
+    print("tentado transmitir .... {} bytes".format(txLen))
+    com.sendData(txBuffer)
     # Atualiza dados da transmissão
-    #txSize = com.tx.getStatus()
-
-
-    #Nome da imagem a ser recebida
-    #imgEscrita = ""
-
-    # Faz a recepção dos dados
-    print ("Recebendo dados .... ")
-    
-    while not com.rx.getIsEmpty:
-        pass
-        
-    rxBuffer = com.rx.getNData()
-
-    
-    # Criando imagem nova
-    print ("Criando nova imagem...")
-    imgNova = open(imgEscrita,'wb')
-    imgNova.write(rxBuffer)
-    imgNova.close()
+    txSize = com.tx.getStatus()
 
     # Encerra comunicação
     print("-------------------------")

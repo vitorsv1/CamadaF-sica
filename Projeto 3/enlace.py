@@ -58,7 +58,7 @@ class enlace(object):
         self.tx.sendBuffer(pacote)
         time.sleep(1)
         throughput = len(pacote)/self.fisica.tempo
-        print("Throughput: {} B/s".format(throughput))
+        print("Throughput: {} kB/s".format(throughput/1024))
 
     def getData(self, size):
         """ Get n data over the enlace interface
