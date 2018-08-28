@@ -132,6 +132,8 @@ def empacota(dado):
                 cargaFiltro.extend(segundoStuff.to_bytes(1,'big'))
                 cargaFiltro += carga[i-2*contador:]
                 contador += 1
+        else:
+            cargaFiltro = carga
 
         # HEAD
         #So foi dado extend

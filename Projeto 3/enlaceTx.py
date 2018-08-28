@@ -7,9 +7,6 @@
 #  Camada de Enlace
 ####################################################
 
-# Importa pacote
-import pacote
-
 # Importa pacote de tempo e math
 import time
 import math
@@ -148,6 +145,8 @@ class TX(object):
                     cargaFiltro.extend(segundoStuff.to_bytes(1,'big'))
                     cargaFiltro += carga[i-2*contador:]
                     contador += 1
+            else:
+                cargaFiltro = carga
 
             # HEAD
             #So foi dado extend

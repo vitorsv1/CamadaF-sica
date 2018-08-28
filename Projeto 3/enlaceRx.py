@@ -107,11 +107,10 @@ class RX(object):
 
         while ((self.getBufferLen() > size) or (self.getBufferLen()==0)):
             size = self.getBufferLen()
-            time.sleep(0.3)
-            print("Recebendo...")
-        pacotao = self.getBuffer(size)
-        dados = self.desempacota(pacotao)
-        return(dados)
+            time.sleep(0.3) # DIFF
+            print("recebendo...") #DIFF
+        dados = self.getBuffer(size) # DIFF
+        return(dados)# DIFF
 
 
     def clearBuffer(self):

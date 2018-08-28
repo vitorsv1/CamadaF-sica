@@ -26,4 +26,4 @@ print(empacotado)
 imgNova = "C:/Users/Mateus Enrico/Documents/Insper/CamadaFisica/Projeto 3/img/teste.png"
 
 saida = pacote.desempacota(empacotado)
-#print(saida)
+print(saida)

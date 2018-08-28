@@ -22,7 +22,7 @@ import time
 
 #serialName = "/dev/ttyACM0"           # Ubuntu (variacao de)
 #serialName = "/dev/tty.usbmodem1411" # Mac    (variacao de)
-serialName = "COM6"                  # Windows(variacao de)
+serialName = "COM3"                  # Windows(variacao de)
 
 print("porta COM aberta com sucesso")
 
@@ -36,9 +36,9 @@ def main():
     #verificar que a comunicação foi aberta
     print("comunicação aberta")
 
-    imgLida = "C:/Users/vitor/Dropbox/Insper/2018.2/Camada Física/Projeto 1 - LoopBack/img/madfox.png"
+    imgLida = "C:/Users/Mateus Enrico/Documents/Insper/CamadaFisica/Projeto 3/img/vai.png"
 
-    imgEscrita = "C:/Users/vitor/Dropbox/Insper/2018.2/Camada Física/Projeto 1 - LoopBack/img/madfoxEscrita.png"
+    imgEscrita = "C:/Users/Mateus Enrico/Documents/Insper/CamadaFisica/Projeto 3/img/recebido.png"
 
     # a seguir ha um exemplo de dados sendo carregado para transmissao
     # voce pode criar o seu carregando os dados de uma imagem. Tente descobrir
