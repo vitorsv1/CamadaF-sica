@@ -91,6 +91,7 @@ class TX(object):
         return(self.threadMutex)
 
 #----------------Metodos-Novos----------------#
+    # ERRO NESSA FUNÇÃO POIS A IMAGEM NÃO FORMA ADEQUADAMENTE
     def empacota(self,dado):
         tipoEncode = "utf-8"
         sizeInteiro = len(dado)
@@ -178,7 +179,7 @@ class TX(object):
             count = count - 1
             #print(count)
 
-        overhead = maxSize / (5 + maxSize + 4)
+        overhead = (5 + maxSize + 4) / maxSize
         print("Overhead: {}%".format(overhead*100))
 
         return(envio)

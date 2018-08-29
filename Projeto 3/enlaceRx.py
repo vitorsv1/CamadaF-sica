@@ -110,7 +110,7 @@ class RX(object):
             time.sleep(0.3) # DIFF
             print("recebendo...") #DIFF
         dados = self.getBuffer(size) # DIFF
-        return(bytearray(dados))# DIFF
+        return(dados)# DIFF
 
 
     def clearBuffer(self):
@@ -168,7 +168,7 @@ class RX(object):
 
         if stuff:
             for i in flagStuff:
-                dadoFiltro = dado[:i-2*count] + dado[i+2-2*count:]
+                dadoFiltro = dado[:i-2*count] + dado[(i+2)-2*count:]
                 count += 1
         else:
             dadoFiltro = dado
