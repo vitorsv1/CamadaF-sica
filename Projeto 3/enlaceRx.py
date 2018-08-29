@@ -110,7 +110,7 @@ class RX(object):
             time.sleep(0.3) # DIFF
             print("recebendo...") #DIFF
         dados = self.getBuffer(size) # DIFF
-        return(dados)# DIFF
+        return(bytearray(dados))# DIFF
 
 
     def clearBuffer(self):
