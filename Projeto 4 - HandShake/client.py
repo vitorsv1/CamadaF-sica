@@ -22,7 +22,7 @@ import time
 #   python -m serial.tools.list_ports
 # se estiver usando windows, o gerenciador de dispositivos informa a porta
 
-#serialName = "/dev/ttyACM0"           # Ubuntu (variacao de)
+serialName = "/dev/ttyACM0"           # Ubuntu (variacao de)
 #serialName = "/dev/tty.usbmodem1411" # Mac    (variacao de)
 #serialName = "COM7"                  # Windows(variacao de)
 
@@ -39,8 +39,8 @@ def main():
     print("comunicação aberta")
 
     #imgEscrita = "C:/Users/Mateus Enrico/Documents/Insper/CamadaFisica/Projeto 3/img/recebido.png"
-    imgEscrita = "C:/Users/vitor/Dropbox/Insper/2018.2/Camada Física/CamadaFisica/Projeto 3/img/recebido.png"
-    
+    #imgEscrita = "C:/Users/vitor/Dropbox/Insper/2018.2/Camada Física/CamadaFisica/Projeto 3/img/recebido.png"
+    imgEscrita = "/home/vitorsv/Dropbox/Insper/2018.2/Camada Física/CamadaFisica/Projeto 4 - HandShake/img/recebido.png"
     # a seguir ha um exemplo de dados sendo carregado para transmissao
     # voce pode criar o seu carregando os dados de uma imagem. Tente descobrir
     #como fazer isso
@@ -68,7 +68,7 @@ def main():
     
     com.sendData(0,3)
     
-    while not flagDatazsdtbgasertbd
+    #while not flagDatazsdtbgasertbd
 
     # Faz a recepção dos dados
     print ("Recebendo dados .... ")
