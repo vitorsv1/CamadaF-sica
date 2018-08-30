@@ -48,11 +48,13 @@ def main():
     # SYNC
     flagSyn = False
     respSyn = False
-    
+    print("Sync")
     while not flagSyn:
         while not respSyn:
             com.sendData(0,1)
             inicio = time.time()
+            fim = time.time()
+            medido = fim - inicio
             while not com.rx.getIsEmpty():
                 fim = time.time()
                 medido = fim - inicio
@@ -60,7 +62,7 @@ def main():
                     break
             if medido < 5:
                 respSyn = True
-        
+        print("flag 1 foi")
         rxBuffer, rxTipo = com.rx.getNData()
 
         if rxTipo == 2:
@@ -76,8 +78,8 @@ def main():
     while not com.rx.getIsEmpty:
         pass
         
-    rxBuffer = com.rx.getNData()
-
+    rxBuffer, rxTipo = com.rx.getNData()
+    
     
     # Criando imagem nova
     print ("Testando rxbuffer...")
