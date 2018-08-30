@@ -153,6 +153,9 @@ class TX(object):
                 pay.extend(bytes(cargaFiltro))
             
             else:
+                atual = 0
+                number = 0
+                size = 1
                 pay.extend(dado.to_bytes(1,'big'))
             # HEAD
             #So foi dado extend
