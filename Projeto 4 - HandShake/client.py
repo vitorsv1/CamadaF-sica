@@ -49,6 +49,19 @@ def main():
     #flagSyn = False
     #respSyn = False
     print("Sync")
+
+    com.sendData(0,1)
+
+    while not com.rx.getIsEmpty:
+        pass
+
+    rxBuffer, rxTipo = com.rx.getNData()
+
+    if rxTipo == 2:
+        print("Chegou 2")
+        com.sendData(0,3)
+        print("Enviou 3")
+
     #while not flagSyn:
     #    while not respSyn:
     #        com.sendData(0,1)
@@ -83,7 +96,7 @@ def main():
     
     # Criando imagem nova
     print ("Testando rxbuffer...")
-    print (rxBuffer)
+    #print (rxBuffer)
     imgNova = open(imgEscrita,'wb')
     imgNova.write(rxBuffer)
     imgNova.close()
