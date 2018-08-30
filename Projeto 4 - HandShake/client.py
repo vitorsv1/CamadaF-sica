@@ -10,7 +10,6 @@
 
 print("comecou")
 
-<<<<<<< HEAD
 #agora aqui
 
 from enlace import *
@@ -22,21 +21,10 @@ import time
 #   para saber a sua porta, execute no terminal :
 #   python -m serial.tools.list_ports
 # se estiver usando windows, o gerenciador de dispositivos informa a porta
-=======
-from enlace import *
-import time
-from tkinter import filedialog, ttk
-from tkinter import *
-from tkinter.filedialog import askopenfilename
->>>>>>> 6595827d58b266a1aa8d557625bab224e23cb829
 
 #serialName = "/dev/ttyACM0"           # Ubuntu (variacao de)
 #serialName = "/dev/tty.usbmodem1411" # Mac    (variacao de)
-<<<<<<< HEAD
 #serialName = "COM7"                  # Windows(variacao de)
-=======
-serialName = "COM4"                  # Windows(variacao de)
->>>>>>> 6595827d58b266a1aa8d557625bab224e23cb829
 
 print("porta COM aberta com sucesso")
 
@@ -56,6 +44,26 @@ def main():
     # a seguir ha um exemplo de dados sendo carregado para transmissao
     # voce pode criar o seu carregando os dados de uma imagem. Tente descobrir
     #como fazer isso
+
+    # SYNC
+    while not flagSyn:
+        while not resposta:
+            com.sendData(0,1)
+            inicio = time.time()
+            while not com.rx.getIsEmpty():
+                fim = time.time()
+                medido = fim - inicio
+                if medido > 5:
+                    break
+            if medido < 5:
+                resposta = True
+        
+        rxBuffer, rxTipo = com.rx.getNData()
+
+        if rxTipo == 2:
+            flagSyn = True
+    
+    com.sendData(0,3)
 
     # Faz a recepção dos dados
     print ("Recebendo dados .... ")
