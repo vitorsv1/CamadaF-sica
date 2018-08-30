@@ -110,6 +110,7 @@ class RX(object):
             time.sleep(0.3) # DIFF
             print("recebendo...") #DIFF
         dados = self.getBuffer(size) # DIFF
+        print(dados)
         data,tipo = self.desempacota(dados)
         return(data,tipo)# DIFF
 
@@ -122,27 +123,30 @@ class RX(object):
     #----------------Metodos-Novos----------------#
     def desempacota(self,dado):
         # Info
-        headSize = 5
-    
+        headSize = 6
+        headType = 4
         count = 0
         head = bytearray()
         pay = bytearray()
         eop = bytearray()
     
         for i in dado:
-            if count < headSize:
+            if count < headType:
                 #print(i)
-                if count == 0:
+                if count == 0 or count == 1:
                     head.extend(i.to_bytes(1,'big'))
                 else:
                     head.extend(i.to_bytes(2,'big'))
                 count += 1
         tamanho = head[0]
-        pacote = head[1] * 256 + head[2]
-        maxPacotes = head[3] * 256 + head[4]
-        tipo = head[5]
-        #print(head)
+        tipo = head[1]
+        pacote = head[2] * 256 + head[3]
+        maxPacotes = head[4] * 256 + head[5]
         
+        print(head)
+        print(len(head))
+        
+
         count = 1
         flagEop = 0
         correto = False

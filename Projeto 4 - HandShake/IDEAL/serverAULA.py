@@ -51,7 +51,7 @@ def main():
     while not com.rx.getIsEmpty:
         pass
         
-    rxBuffer = com.rx.getNData()
+    rxBuffer, rxTipo = com.rx.getNData()
 
     
     # Criando imagem nova
