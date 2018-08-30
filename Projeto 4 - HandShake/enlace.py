@@ -51,12 +51,10 @@ class enlace(object):
     ################################
     # Application  interface       #
     ################################
-    def sendData(self, data):
+    def sendData(self, data,tipo):
         """ Send data over the enlace interface
         """
-        pacote = self.tx.empacota(data)
-        print("empacotado pra sair:")
-        print(pacote)
+        pacote = self.tx.empacota(data,tipo)
         self.tx.sendBuffer(pacote)
         time.sleep(1)
         throughput = len(pacote)/self.fisica.tempo

@@ -92,7 +92,7 @@ class TX(object):
 
 #----------------Metodos-Novos----------------#
     # ERRO NESSA FUNÇÃO POIS A IMAGEM NÃO FORMA ADEQUADAMENTE
-    def empacota(self,dado):
+    def empacota(self,dado,tipo):
         tipoEncode = "utf-8"
         sizeInteiro = len(dado)
         maxSize = 255 # 16 bits pra representar o tamanho do payload
@@ -162,6 +162,7 @@ class TX(object):
             head.extend(size.to_bytes(1,'big')) 
             head.extend(atual.to_bytes(2,'big'))
             head.extend((number-1).to_bytes(2,'big'))
+            head.extend(tipo.to_bytes(1,'big'))
 
             pay.extend(bytes(cargaFiltro))
 
@@ -179,7 +180,7 @@ class TX(object):
             count = count - 1
             #print(count)
 
-        overhead = (5 + maxSize + 4) / maxSize
+        overhead = (6 + maxSize + 4) / maxSize
         print("Overhead: {}%".format(overhead*100))
 
         return(envio)
