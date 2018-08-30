@@ -64,16 +64,22 @@ def main():
 
     flagSyn = False
 
-    while not flagSyn:
-        while not com.rx.getIsEmpty:
-            pass
+    while not com.rx.getIsEmpty:
+        pass
+
+    rxBuffer, rxTipo = com.rx.getNData()
+    print('Chegou 1')
+
+    if rxTipo == 1:
+        com.sendData(0,2)
+        print('enviou 2')
 
     # Transmite dado
-    print("tentado transmitir .... {} bytes".format(txLen)) ### data
+    #print("tentado transmitir .... {} bytes".format(txLen)) ### data
 
-    com.sendData(txBuffer,4)
+    #com.sendData(txBuffer,4)
     # Atualiza dados da transmissão
-    txSize = com.tx.getStatus()
+    #txSize = com.tx.getStatus()
 
     # Encerra comunicação
     print("-------------------------")
