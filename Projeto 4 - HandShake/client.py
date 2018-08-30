@@ -55,7 +55,7 @@ def main():
 
     # Transmite dado
     print("tentado transmitir .... {} bytes".format(txLen))
-    com.sendData(txBuffer)
+    com.sendData(txBuffer,4)
     # Atualiza dados da transmissão
     txSize = com.tx.getStatus()
 

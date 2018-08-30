@@ -15,9 +15,20 @@ print("comecou")
 from enlace import *
 import time
 
+<<<<<<< HEAD
 #serialName = "/dev/ttyACM0"           # Ubuntu (variacao de)
+=======
+# voce deverá descomentar e configurar a porta com através da qual ira fazer a
+# comunicaçao
+# Serial Com Port
+#   para saber a sua porta, execute no terminal :
+#   python -m serial.tools.list_ports
+# se estiver usando windows, o gerenciador de dispositivos informa a porta
+
+serialName = "/dev/ttyACM0"           # Ubuntu (variacao de)
+>>>>>>> 4a766fee5fdce65b3a0414225bed56c79b989325
 #serialName = "/dev/tty.usbmodem1411" # Mac    (variacao de)
-serialName = "COM7"                  # Windows(variacao de)
+#serialName = "COM7"                  # Windows(variacao de)
 
 print("porta COM aberta com sucesso")
 
