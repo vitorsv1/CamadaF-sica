@@ -107,6 +107,7 @@ class RX(object):
 
         while ((self.getBufferLen() > size) or (self.getBufferLen()==0)):
             size = self.getBufferLen()
+            print(size)
             time.sleep(0.3) # DIFF
             print("recebendo...") #DIFF
         dados = self.getBuffer(size) # DIFF
