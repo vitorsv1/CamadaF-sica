@@ -107,14 +107,11 @@ class RX(object):
 
         while ((self.getBufferLen() > size) or (self.getBufferLen()==0)):
             size = self.getBufferLen()
-            print(size)
             time.sleep(0.3) # DIFF
             print("recebendo...") #DIFF
-        dados = self.getBuffer(size) # DIFF
-        print("empacotado chegou:")
-        print(dados)
+        dados,tipo = self.getBuffer(size) # DIFF
         data = self.desempacota(dados)
-        return(data)# DIFF
+        return(data,tipo)# DIFF
 
 
     def clearBuffer(self):
@@ -143,6 +140,7 @@ class RX(object):
         tamanho = head[0]
         pacote = head[1] * 256 + head[2]
         maxPacotes = head[3] * 256 + head[4]
+        tipo = head[5]
         #print(head)
         
         count = 1
@@ -193,7 +191,7 @@ class RX(object):
         if correto:
             pay = dadoFiltro[headSize:flagEop]
             print("envio correto")
-            return pay
+            return pay,tipo
         else:
             if not corretoPay:
                 print("erro no tamanho do payload")
