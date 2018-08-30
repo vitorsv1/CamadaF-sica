@@ -111,6 +111,8 @@ class RX(object):
             time.sleep(0.3) # DIFF
             print("recebendo...") #DIFF
         dados = self.getBuffer(size) # DIFF
+        print("empacotado chegou:")
+        print(dados)
         data = self.desempacota(dados)
         return(data)# DIFF
 
@@ -176,7 +178,9 @@ class RX(object):
             dadoFiltro = dado
 
         flagEop -= count * 2
-
+        print("Indice do EOP")
+        print(flagEop)
+        
         if count == len(flagStuff):
             corretoStuff = True
 

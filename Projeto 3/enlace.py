@@ -55,6 +55,7 @@ class enlace(object):
         """ Send data over the enlace interface
         """
         pacote = self.tx.empacota(data)
+        print("empacotado pra sair:")
         print(pacote)
         self.tx.sendBuffer(pacote)
         time.sleep(1)
