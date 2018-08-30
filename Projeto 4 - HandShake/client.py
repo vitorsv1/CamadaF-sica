@@ -62,6 +62,14 @@ def main():
         com.sendData(0,3)
         print("Enviou 3")
 
+    while not com.rx.getIsEmpty:
+        pass
+
+    rxBuffer, rxTipo = com.rx.getNData()
+
+    if rxTipo == 4:
+        print("Chegou 4")
+        
     #while not flagSyn:
     #    while not respSyn:
     #        com.sendData(0,1)
@@ -86,20 +94,22 @@ def main():
     #while not flagDatazsdtbgasertbd
 
     # Faz a recepção dos dados
-    print ("Recebendo dados .... ")
+    #print ("Recebendo dados .... ")
     
-    while not com.rx.getIsEmpty:
-        pass
+    #while not com.rx.getIsEmpty:
+    #    pass
         
     #rxBuffer, rxTipo = com.rx.getNData()
     
     
     # Criando imagem nova
-    print ("Testando rxbuffer...")
+    #print ("Testando rxbuffer...")
     #print (rxBuffer)
     imgNova = open(imgEscrita,'wb')
     imgNova.write(rxBuffer)
     imgNova.close()
+
+    
 
     # Encerra comunicação
     print("-------------------------")
