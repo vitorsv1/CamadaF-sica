@@ -67,6 +67,6 @@ class enlace(object):
         """
         print('entrou na leitura e tentara ler ' + str(size) )
         data = self.rx.getNData(size)
-        dados = self.rx.desempacota(data)
-        return(dados, len(dados))
+        #dados = self.rx.desempacota(data)
+        return(data, len(data))
     
