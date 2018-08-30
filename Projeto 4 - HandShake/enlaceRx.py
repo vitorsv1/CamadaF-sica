@@ -109,8 +109,8 @@ class RX(object):
             size = self.getBufferLen()
             time.sleep(0.3) # DIFF
             print("recebendo...") #DIFF
-        dados,tipo = self.getBuffer(size) # DIFF
-        data = self.desempacota(dados)
+        dados = self.getBuffer(size) # DIFF
+        data,tipo = self.desempacota(dados)
         return(data,tipo)# DIFF
 
 
