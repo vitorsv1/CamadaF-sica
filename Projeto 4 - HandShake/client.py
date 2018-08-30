@@ -46,8 +46,11 @@ def main():
     #como fazer isso
 
     # SYNC
+    flagSyn = False
+    respSyn = False
+    
     while not flagSyn:
-        while not resposta:
+        while not respSyn:
             com.sendData(0,1)
             inicio = time.time()
             while not com.rx.getIsEmpty():
@@ -56,7 +59,7 @@ def main():
                 if medido > 5:
                     break
             if medido < 5:
-                resposta = True
+                respSyn = True
         
         rxBuffer, rxTipo = com.rx.getNData()
 
@@ -64,6 +67,8 @@ def main():
             flagSyn = True
     
     com.sendData(0,3)
+    
+    while not flagDatazsdtbgasertbd
 
     # Faz a recepção dos dados
     print ("Recebendo dados .... ")

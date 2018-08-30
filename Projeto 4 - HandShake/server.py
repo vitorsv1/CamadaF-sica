@@ -62,6 +62,12 @@ def main():
     print("Tempo esperado")
     print("{} s".format(txLen*10/com.baudrate))
 
+    flagSyn = False
+
+    while not flagSyn:
+        while not com.rx.getIsEmpty:
+            pass
+
     # Transmite dado
     print("tentado transmitir .... {} bytes".format(txLen)) ### data
 
