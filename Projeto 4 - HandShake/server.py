@@ -14,6 +14,7 @@ print("comecou")
 
 from enlace import *
 import time
+<<<<<<< HEAD
 from tkinter import filedialog, ttk
 from tkinter import *
 from tkinter.filedialog import askopenfilename
@@ -24,6 +25,8 @@ from tkinter.filedialog import askopenfilename
 #   para saber a sua porta, execute no terminal :
 #   python -m serial.tools.list_ports
 # se estiver usando windows, o gerenciador de dispositivos informa a porta
+=======
+>>>>>>> 6595827d58b266a1aa8d557625bab224e23cb829
 
 serialName = "/dev/ttyACM0"           # Ubuntu (variacao de)
 #serialName = "/dev/tty.usbmodem1411" # Mac    (variacao de)
@@ -52,6 +55,7 @@ def main():
                             )
         print (name)
     
+<<<<<<< HEAD
     #Using try in case user types in unknown file or closes without choosing a file.
         return name 
     imgLida = OpenFile() 
@@ -61,6 +65,10 @@ def main():
     txLen    = len(txBuffer)
     print("Tempo esperado")
     print("{} s".format(txLen*10/com.baudrate))
+=======
+    # Faz a recepção dos dados
+    print ("Recebendo dados .... ")
+>>>>>>> 6595827d58b266a1aa8d557625bab224e23cb829
     
     # SYNC
     while not flagSyn:
