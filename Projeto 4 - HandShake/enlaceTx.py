@@ -110,45 +110,50 @@ class TX(object):
             atual = number - count
 
             # PAYLOAD
-            if sizeInteiro <= maxSize:
-                size = sizeInteiro
-                carga = dado[0:]
-            else:
-                if count == 1:
-                    size = sizeInteiro - (number - 1)*maxSize
-                    carga = dado[(maxSize*atual+1):]
+            if tipo == 4:
+                if sizeInteiro <= maxSize:
+                    size = sizeInteiro
+                    carga = dado[0:]
                 else:
-                    if atual == 0:
-                        adendo = 0
+                    if count == 1:
+                        size = sizeInteiro - (number - 1)*maxSize
+                        carga = dado[(maxSize*atual+1):]
                     else:
-                        adendo = 1
+                        if atual == 0:
+                            adendo = 0
+                        else:
+                            adendo = 1
 
-                    size = maxSize
-                    carga = dado[(maxSize*atual+adendo):(maxSize*(atual+1))]
+                        size = maxSize
+                        carga = dado[(maxSize*atual+adendo):(maxSize*(atual+1))]
+                    
+                flagStuff = []
+                stuff = False
+
+                for i in range(len(dado)):
+                    if i + 3 < len(dado):
+                        if dado[i] == 255 and dado[i+1] == 254 and dado[i+2] == 253 and dado[i+3] == 252: #0xFF 0xFE 0xFD 0xFC
+                            flagStuff.append(i)
+                            stuff = True
                 
-            flagStuff = []
-            stuff = False
+                cargaFiltro = bytearray()
+                contador = 0
+                primeiroStuff = 221
+                segundoStuff = 238
+                if stuff: 
+                    for i in flagStuff:
+                        cargaFiltro = carga[:i-2*contador]
+                        cargaFiltro.extend(primeiroStuff.to_bytes(1,'big'))
+                        cargaFiltro.extend(segundoStuff.to_bytes(1,'big'))
+                        cargaFiltro += carga[i-2*contador:]
+                        contador += 1
+                else:
+                    cargaFiltro = carga
 
-            for i in range(len(dado)):
-                if i + 3 < len(dado):
-                    if dado[i] == 255 and dado[i+1] == 254 and dado[i+2] == 253 and dado[i+3] == 252: #0xFF 0xFE 0xFD 0xFC
-                        flagStuff.append(i)
-                        stuff = True
+                pay.extend(bytes(cargaFiltro))
             
-            cargaFiltro = bytearray()
-            contador = 0
-            primeiroStuff = 221
-            segundoStuff = 238
-            if stuff: 
-                for i in flagStuff:
-                    cargaFiltro = carga[:i-2*contador]
-                    cargaFiltro.extend(primeiroStuff.to_bytes(1,'big'))
-                    cargaFiltro.extend(segundoStuff.to_bytes(1,'big'))
-                    cargaFiltro += carga[i-2*contador:]
-                    contador += 1
             else:
-                cargaFiltro = carga
-
+                pay.extend(dado.to_bytes(1,'big'))
             # HEAD
             #So foi dado extend
 
@@ -160,11 +165,9 @@ class TX(object):
 
             # MONTANDO #
             head.extend(size.to_bytes(1,'big')) 
+            head.extend(tipo.to_bytes(1,'big'))
             head.extend(atual.to_bytes(2,'big'))
             head.extend((number-1).to_bytes(2,'big'))
-            head.extend(tipo.to_bytes(1,'big'))
-
-            pay.extend(bytes(cargaFiltro))
 
             eop.extend(primeiro.to_bytes(1,'big'))
             eop.extend(segundo.to_bytes(1,'big'))

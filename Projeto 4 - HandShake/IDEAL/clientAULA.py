@@ -61,7 +61,7 @@ def main():
     txLen    = len(txBuffer)
     print("Tempo esperado")
     print("{} s".format(txLen*10/com.baudrate))
-    
+
     # SYNC
     while not flagSyn:
         while not resposta:
@@ -81,6 +81,7 @@ def main():
             flagSyn = True
     
     com.sendData(0,3)
+
 
     # Transmite dado
     print("tentado transmitir .... {} bytes".format(txLen)) ### data
