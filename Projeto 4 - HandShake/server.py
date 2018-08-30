@@ -68,9 +68,9 @@ def main():
         pass
 
     rxBuffer, rxTipo = com.rx.getNData()
-    print('Chegou 1')
 
     if rxTipo == 1:
+        print('Chegou 1')
         com.sendData(0,2)
         print('enviou 2')
 
