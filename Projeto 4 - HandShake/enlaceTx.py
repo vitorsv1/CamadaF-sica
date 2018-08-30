@@ -94,9 +94,8 @@ class TX(object):
     # ERRO NESSA FUNÇÃO POIS A IMAGEM NÃO FORMA ADEQUADAMENTE
     def empacota(self,dado,tipo):
         tipoEncode = "utf-8"
-    
-        number = math.ceil(sizeInteiro/maxSize)
-        count = number
+
+        count = 1
         envio = bytearray()
     
         while count != 0:
@@ -105,12 +104,16 @@ class TX(object):
             pay = bytearray()
             eop = bytearray()
 
-            atual = number - count
 
             # PAYLOAD
             if tipo == 4:
+                atual = number - count
                 sizeInteiro = len(dado)
                 maxSize = 255 # 16 bits pra representar o tamanho do payload
+                
+                number = math.ceil(sizeInteiro/maxSize)
+                count = number
+                
                 if sizeInteiro <= maxSize:
                     size = sizeInteiro
                     carga = dado[0:]
