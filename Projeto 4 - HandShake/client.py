@@ -62,7 +62,6 @@ def main():
                     break
             if medido < 5:
                 respSyn = True
-        
         print("flag 1 foi")
         rxBuffer, rxTipo = com.rx.getNData()
 
@@ -79,8 +78,8 @@ def main():
     while not com.rx.getIsEmpty:
         pass
         
-    rxBuffer = com.rx.getNData()
-
+    rxBuffer, rxTipo = com.rx.getNData()
+    
     
     # Criando imagem nova
     print ("Testando rxbuffer...")
