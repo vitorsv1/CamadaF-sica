@@ -72,22 +72,17 @@ def main():
         
     #while not flagSyn:
     #    while not respSyn:
-    #        com.sendData(0,1)
+    #       com.sendData(0,1)
     #       inicio = time.time()
-    #       fim = time.time()
-    #        medido = fim - inicio
-    #        while not com.rx.getIsEmpty():
-    #            fim = time.time()
-    #            medido = fim - inicio
-    #            if medido > 5:
-    #                break
-    #        if medido < 5:
-    #            respSyn = True
-    #            print("flag 1 foi")
+    #       fim = 0
+    #       medido = inicio - fim 
+    #       if medido <= 5:
+    #           fim = time.time() 
+    #           respSyn = True
+    #           print("flag 1 foi")
     #    rxBuffer, rxTipo = com.rx.getNData()
-
-     #   if rxTipo == 2:
-     #       flagSyn = True
+    #   if rxTipo == 2:
+    #       flagSyn = True
     
     #com.sendData(0,3)
     
