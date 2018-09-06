@@ -110,7 +110,7 @@ class RX(object):
             time.sleep(0.3) # DIFF
             print("recebendo...") #DIFF
         dados = self.getBuffer(size) # DIFF
-        print(dados)
+        #print(dados)
         data,tipo = self.desempacota(dados)
         return(data,tipo)# DIFF
 
@@ -142,9 +142,6 @@ class RX(object):
         tipo = head[1]
         pacote = head[2] * 256 + head[3]
         maxPacotes = head[4] * 256 + head[5]
-        
-        print(head)
-        print(len(head))
         
 
         count = 1

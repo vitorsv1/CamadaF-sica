@@ -55,7 +55,7 @@ class enlace(object):
         """ Send data over the enlace interface
         """
         pacote = self.tx.empacota(data,tipo)
-        print(pacote)
+        #print(pacote)
         self.tx.sendBuffer(pacote)
         time.sleep(1)
         throughput = len(pacote)/self.fisica.tempo

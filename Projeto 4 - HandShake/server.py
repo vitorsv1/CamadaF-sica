@@ -1,16 +1,8 @@
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#####################################################
-# Camada Física da Computação
-#Carareto
-#17/02/2018
-#  Aplicação
-####################################################
 
 print("comecou")
-
-#aokdaopskdp
 
 from enlace import *
 import time
@@ -18,15 +10,7 @@ from tkinter import filedialog, ttk
 from tkinter import *
 from tkinter.filedialog import askopenfilename
  
-# voce deverá descomentar e configurar a porta com através da qual ira fazer a
-# comunicaçao
-# Serial Com Port
-#   para saber a sua porta, execute no terminal :
-#   python -m serial.tools.list_ports
-# se estiver usando windows, o gerenciador de dispositivos informa a porta
-
-serialName = "/dev/ttyACM0"           # Ubuntu (variacao de)
-#serialName = "/dev/tty.usbmodem1411" # Mac    (variacao de)
+serialName = "/dev/ttyACM1"           # Ubuntu (variacao de)
 #serialName = "COM4"                  # Windows(variacao de)
 
 
@@ -54,13 +38,13 @@ def main():
     
     #Using try in case user types in unknown file or closes without choosing a file.
         return name 
-    imgLida = OpenFile() 
-
+    #imgLida = OpenFile() 
+    imgLida = "/home/mateusenrico/Documentos/Insper/CamadaFisica/Projeto 4 - HandShake/img/vai.png"
     img = open(imgLida,'rb')
-    txBuffer = img.read()
-    txLen    = len(txBuffer)
-    print("Tempo esperado")
-    print("{} s".format(txLen*10/com.baudrate))
+    txBufferIMG = img.read()
+    txLenIMG    = len(txBufferIMG)
+    print("Tempo esperado para conteudo")
+    print("{} s".format(txLenIMG*10/com.baudrate))
 
     flagSyn = False
 
@@ -72,20 +56,49 @@ def main():
     if rxTipo == 1:
         print('Chegou 1')
         com.sendData(0,2)
-        print('enviou 2')
+        print('Enviou 2')
 
-    # Transmite dado
-    #print("tentado transmitir .... {} bytes".format(txLen)) ### data
+    while not com.rx.getIsEmpty:
+        pass
 
-    #com.sendData(txBuffer,4)
-    # Atualiza dados da transmissão
-    #txSize = com.tx.getStatus()
+    rxBuffer, rxTipo = com.rx.getNData()
+
+    if rxTipo == 3:
+        print('Chegou 3')
+
+        print("tentado transmitir .... {} bytes".format(txLenIMG)) ### data
+
+        com.sendData(txBufferIMG,4)
+        # Atualiza dados da transmissão
+        txSize = com.tx.getStatus()
+        print('Enviou 4')
+
+    ack = False
+    if ack == False:
+        while not com.rx.getIsEmpty:
+            pass
+
+        rxBuffer, rxTipo = com.rx.getNData()
+
+        if rxTipo == 5:
+            print("Chegou 5, envio foi correto")
+            com.sendData(0,7)
+            print("Enviou 7")
+            ack = True
+        elif rxTipo == 6:
+            print("Chegou 6, reenviando 4")
+            com.sendData(txBufferIMG,4)
+            ack = False
+        else:
+            print("caso estranho")
+
+    if ack == True:
+        com.disable()
 
     # Encerra comunicação
     print("-------------------------")
     print("Comunicação encerrada")
     print("-------------------------")
-    com.disable()
 
     #so roda o main quando for executado do terminal ... se for chamado dentro de outro modulo nao roda
 if __name__ == "__main__":
