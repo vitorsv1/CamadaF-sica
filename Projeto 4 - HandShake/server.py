@@ -46,8 +46,6 @@ def main():
     print("Tempo esperado para conteudo")
     print("{} s".format(txLenIMG*10/com.baudrate))
 
-    flagSyn = False
-
     while not com.rx.getIsEmpty:
         pass
 
@@ -55,11 +53,19 @@ def main():
 
     if rxTipo == 1:
         print('Chegou 1')
+        time.sleep(3)
         com.sendData(0,2)
         print('Enviou 2')
 
-    while not com.rx.getIsEmpty:
-        pass
+    com.rx.clearBuffer()
+
+    inicio = time.time()
+    timeout = 0
+    while com.rx.getIsEmpty():
+        timeout = time.time() - inicio
+        if timeout >= 5:
+            com.sendData(0,2)
+            inicio = time.time()
 
     rxBuffer, rxTipo = com.rx.getNData()
 
@@ -75,8 +81,16 @@ def main():
 
     ack = False
     if ack == False:
-        while not com.rx.getIsEmpty:
-            pass
+
+        com.rx.clearBuffer()
+
+        inicio = time.time()
+        timeout = 0
+        while com.rx.getIsEmpty():
+            timeout = time.time() - inicio
+            if timeout >= 5:
+                com.sendData(0,4)
+                inicio = time.time()
 
         rxBuffer, rxTipo = com.rx.getNData()
 

@@ -27,6 +27,7 @@ class RX(object):
         self.threadStop  = False
         self.threadMutex = True
         self.READLEN     = 1024
+        self.timeout     = 0
 
     def thread(self): 
         """ RX thread, to send data in parallel with the code
@@ -104,11 +105,12 @@ class RX(object):
         #if self.getBufferLen() < size:
             #print("ERROS!!! TERIA DE LER %s E LEU APENAS %s", (size,temPraLer))
         size = 0
-
+        #inicio = time.time()
         while ((self.getBufferLen() > size) or (self.getBufferLen()==0)):
             size = self.getBufferLen()
             time.sleep(0.3) # DIFF
             print("recebendo...") #DIFF
+        #self.timeout = time.time() - inicio
         dados = self.getBuffer(size) # DIFF
         #print(dados)
         data,tipo = self.desempacota(dados)

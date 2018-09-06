@@ -7,8 +7,8 @@ print("comecou")
 from enlace import *
 import time
 
-#serialName = "/dev/ttyACM0"           # Ubuntu (variacao de)
-serialName = "COM7"                  # Windows(variacao de)
+serialName = "/dev/ttyACM1"           # Ubuntu (variacao de)
+#serialName = "COM7"                  # Windows(variacao de)
 
 print("porta COM aberta com sucesso")
 
@@ -23,9 +23,9 @@ def main():
     print("comunicação aberta")
 
     #imgEscrita = "C:/Users/Mateus Enrico/Documents/Insper/CamadaFisica/Projeto 3/img/recebido.png"
-    imgEscrita = "C:/Users/vitor/Dropbox/Insper/2018.2/Camada Física/CamadaFisica/Projeto 3/img/recebido.png"
+    #imgEscrita = "C:/Users/vitor/Dropbox/Insper/2018.2/Camada Física/CamadaFisica/Projeto 3/img/recebido.png"
     #imgEscrita = "/home/vitorsv/Dropbox/Insper/2018.2/Camada Física/CamadaFisica/Projeto 4 - HandShake/img/recebido.png"
-    #imgEscrita = "/home/mateusenrico/Documentos/Insper/CamadaFisica/Projeto 4 - HandShake/img/recebido.png"
+    imgEscrita = "/home/mateusenrico/Documentos/Insper/CamadaFisica/Projeto 4 - HandShake/img/recebido.png"
 
 
     # SYNC
@@ -33,8 +33,15 @@ def main():
 
     com.sendData(0,1)
 
-    while not com.rx.getIsEmpty:
-        pass
+    com.rx.clearBuffer()
+
+    inicio = time.time()
+    timeout = 0
+    while com.rx.getIsEmpty():
+        timeout = time.time() - inicio
+        if timeout >= 5:
+            com.sendData(0,1)
+            inicio = time.time()
 
     rxBuffer, rxTipo = com.rx.getNData()
 
@@ -43,8 +50,15 @@ def main():
         com.sendData(0,3)
         print("Enviou 3")
 
-    while not com.rx.getIsEmpty:
-        pass
+    com.rx.clearBuffer()
+
+    inicio = time.time()
+    timeout = 0
+    while com.rx.getIsEmpty():
+        timeout = time.time() - inicio
+        if timeout >= 5:
+            com.sendData(0,3)
+            inicio = time.time()
 
     rxBuffer, rxTipo = com.rx.getNData()
 
@@ -58,8 +72,15 @@ def main():
         com.sendData(0,5)
         print("Enviou 5")
 
-    while not com.rx.getIsEmpty:
-        pass
+    com.rx.clearBuffer()
+
+    inicio = time.time()
+    timeout = 0
+    while com.rx.getIsEmpty():
+        timeout = time.time() - inicio
+        if timeout >= 5:
+            com.sendData(0,5)
+            inicio = time.time()
 
     rxBuffer, rxTipo = com.rx.getNData()
 
