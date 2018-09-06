@@ -10,7 +10,7 @@ from tkinter import filedialog, ttk
 from tkinter import *
 from tkinter.filedialog import askopenfilename
  
-serialName = "/dev/ttyACM1"           # Ubuntu (variacao de)
+serialName = "/dev/ttyACM0"           # Ubuntu (variacao de)
 #serialName = "COM4"                  # Windows(variacao de)
 
 
