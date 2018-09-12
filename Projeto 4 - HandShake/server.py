@@ -49,11 +49,11 @@ def main():
     while not com.rx.getIsEmpty:
         pass
 
-    rxBuffer, rxTipo = com.rx.getNData()
+    rxBuffer, rxTipo, rxErro = com.rx.getNData()
 
     if rxTipo == 1:
         print('Chegou 1')
-        time.sleep(3)
+        time.sleep(1)
         com.sendData(0,2)
         print('Enviou 2')
 
@@ -66,14 +66,16 @@ def main():
         if timeout >= 5:
             com.sendData(0,2)
             inicio = time.time()
+        estado = com.rx.getIsEmpty()
 
-    rxBuffer, rxTipo = com.rx.getNData()
+    rxBuffer, rxTipo, rxErro = com.rx.getNData()
 
     if rxTipo == 3:
         print('Chegou 3')
 
         print("tentado transmitir .... {} bytes".format(txLenIMG)) ### data
 
+        time.sleep(1)
         com.sendData(txBufferIMG,4)
         # Atualiza dados da transmissão
         txSize = com.tx.getStatus()
@@ -89,18 +91,21 @@ def main():
         while com.rx.getIsEmpty():
             timeout = time.time() - inicio
             if timeout >= 5:
-                com.sendData(0,4)
+                com.sendData(txBufferIMG,4)
                 inicio = time.time()
+            estado = com.rx.getIsEmpty()
 
-        rxBuffer, rxTipo = com.rx.getNData()
+        rxBuffer, rxTipo, rxErro = com.rx.getNData()
 
         if rxTipo == 5:
             print("Chegou 5, envio foi correto")
+            time.sleep(1)
             com.sendData(0,7)
             print("Enviou 7")
             ack = True
         elif rxTipo == 6:
             print("Chegou 6, reenviando 4")
+            time.sleep(1)
             com.sendData(txBufferIMG,4)
             ack = False
         else:

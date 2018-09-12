@@ -31,58 +31,75 @@ def main():
     # SYNC
     print("Sync")
 
+    time.sleep(1)
     com.sendData(0,1)
 
     com.rx.clearBuffer()
 
     inicio = time.time()
     timeout = 0
+    estado = com.rx.getIsEmpty()
     while com.rx.getIsEmpty():
         timeout = time.time() - inicio
         if timeout >= 5:
             com.sendData(0,1)
             inicio = time.time()
+        estado = com.rx.getIsEmpty()
 
-    rxBuffer, rxTipo = com.rx.getNData()
+    rxBuffer, rxTipo, rxErro = com.rx.getNData()
 
     if rxTipo == 2:
         print("Chegou 2")
+        time.sleep(1)
         com.sendData(0,3)
         print("Enviou 3")
 
-    com.rx.clearBuffer()
+    flagPay = False
+    while not flagPay:
+        com.rx.clearBuffer()
 
-    inicio = time.time()
-    timeout = 0
-    while com.rx.getIsEmpty():
-        timeout = time.time() - inicio
-        if timeout >= 5:
-            com.sendData(0,3)
+        inicio = time.time()
+        timeout = 0
+        while com.rx.getIsEmpty():
+            timeout = time.time() - inicio
+            if timeout >= 5:
+                com.sendData(0,3)
+                inicio = time.time()
+            estado = com.rx.getIsEmpty()
+
+        rxBuffer, rxTipo, rxErro = com.rx.getNData()
+
+        if rxTipo == 4:
+            print("Chegou 4")
+            
+            imgNova = open(imgEscrita,'wb')
+            imgNova.write(rxBuffer)
+            imgNova.close()
+            if rxErro == 0:
+                acknack = 5
+                time.sleep(1)
+                com.sendData(0,acknack)
+                print("Enviou 5")
+                flagPay = True
+            else:
+                acknack = 6
+                time.sleep(1)
+                com.sendData(0,acknack)
+                print("Enviou 6")
+                flagPay = False
+
+            com.rx.clearBuffer()
+
             inicio = time.time()
+            timeout = 0
+            while com.rx.getIsEmpty():
+                timeout = time.time() - inicio
+                if timeout >= 5:
+                    com.sendData(0,acknack)
+                    inicio = time.time()
+                estado = com.rx.getIsEmpty()
 
-    rxBuffer, rxTipo = com.rx.getNData()
-
-    if rxTipo == 4:
-        print("Chegou 4")
-        
-        imgNova = open(imgEscrita,'wb')
-        imgNova.write(rxBuffer)
-        imgNova.close()
-        
-        com.sendData(0,5)
-        print("Enviou 5")
-
-    com.rx.clearBuffer()
-
-    inicio = time.time()
-    timeout = 0
-    while com.rx.getIsEmpty():
-        timeout = time.time() - inicio
-        if timeout >= 5:
-            com.sendData(0,5)
-            inicio = time.time()
-
-    rxBuffer, rxTipo = com.rx.getNData()
+            rxBuffer, rxTipo, rxErro = com.rx.getNData()
 
     if rxTipo == 7:
         print("Chegou 7")
