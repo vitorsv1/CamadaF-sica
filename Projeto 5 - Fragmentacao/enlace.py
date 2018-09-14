@@ -70,6 +70,7 @@ class enlace(object):
         self.tx.sendBuffer(mensagem)
         time.sleep(1)
         throughput = len(pacote)/self.fisica.tempo
+        print(mensagem)
         print("Throughput: {} kB/s".format(throughput/1024))
 
     def getData(self, size):

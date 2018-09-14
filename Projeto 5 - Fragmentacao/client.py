@@ -7,7 +7,7 @@ print("comecou")
 from enlace import *
 import time
 
-serialName = "/dev/ttyACM1"           # Ubuntu (variacao de)
+serialName = "/dev/ttyACM0"           # Ubuntu (variacao de)
 #serialName = "COM7"                  # Windows(variacao de)
 
 print("porta COM aberta com sucesso")
@@ -71,11 +71,13 @@ def main():
             estado = com.rx.getIsEmpty()
 
         rxBuffer, rxTipo, rxErro, rxPacote, maxPacotes = com.rx.getNData()
+
         if rxTipo == 4:
             print("-------------------------")
             print("Chegou 4")
             bufferFinal = bytearray()
             for i in range(maxPacotes):
+                print(rxBuffer)
                 if rxPacote == i:
                     if rxErro == 0:
                         acknack = 5
