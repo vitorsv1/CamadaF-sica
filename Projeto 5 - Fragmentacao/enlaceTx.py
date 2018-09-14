@@ -186,7 +186,6 @@ class TX(object):
             msg.extend(eop)
             # ADICIONA A VARIAVEL PARA O BUFFER
             envio.extend(msg)
-            print(count)
             count = count - 1
             #print(count)
             len_pays.append(len(pay))
