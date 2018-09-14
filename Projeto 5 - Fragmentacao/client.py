@@ -46,7 +46,7 @@ def main():
             inicio = time.time()
         estado = com.rx.getIsEmpty()
 
-    rxBuffer, rxTipo, rxErro = com.rx.getNData()
+    rxBuffer, rxTipo, rxErro, rxPacote, maxPacotes = com.rx.getNData()
 
     if rxTipo == 2:
         print("-------------------------")
@@ -69,43 +69,68 @@ def main():
                 inicio = time.time()
             estado = com.rx.getIsEmpty()
 
-        rxBuffer, rxTipo, rxErro = com.rx.getNData()
+        rxBuffer, rxTipo, rxErro, rxPacote, maxPacotes = com.rx.getNData()
 
         if rxTipo == 4:
             print("-------------------------")
             print("Chegou 4")
-            
-            imgNova = open(imgEscrita,'wb')
-            imgNova.write(rxBuffer)
-            imgNova.close()
-            if rxErro == 0:
-                acknack = 5
-                time.sleep(1)
-                com.sendData(0,acknack)
-                print("-------------------------")
-                print("Enviou 5")
-                flagPay = True
-            #ADICIONAR ELIFs PARA UM NOVO ERRO TIPO 8 A SER ENVIADO
-            else:
-                acknack = 6
-                time.sleep(1)
-                com.sendData(0,acknack)
-                print("-------------------------")
-                print("Enviou 6")
-                flagPay = False
+            bufferFinal = bytearray()
+            for i in range(maxPacotes):
+                if rxPacote == i:
+                    if rxErro == 0:
+                        acknack = 5
+                        time.sleep(1)
+                        com.sendData(0,acknack)
+                        print("-------------------------")
+                        print("Enviou 5")
+                        bufferFinal.extend(rxBuffer)
+                        #flagPay = True
+                    #ADICIONAR ELIFs PARA UM NOVO ERRO TIPO 8 A SER ENVIADO
+                    else:
+                        acknack = 6
+                        time.sleep(1)
+                        com.sendData(0,acknack,rxPacote)
+                        print("-------------------------")
+                        print("Enviou 6,pedindo {}".format(rxPacote))
+                        #flagPay = False
 
-            com.rx.clearBuffer()
+                    com.rx.clearBuffer()
 
-            inicio = time.time()
-            timeout = 0
-            while com.rx.getIsEmpty():
-                timeout = time.time() - inicio
-                if timeout >= 5:
-                    com.sendData(0,acknack)
                     inicio = time.time()
-                estado = com.rx.getIsEmpty()
+                    timeout = 0
+                    while com.rx.getIsEmpty():
+                        timeout = time.time() - inicio
+                        if timeout >= 5:
+                            com.sendData(0,acknack)
+                            inicio = time.time()
+                        estado = com.rx.getIsEmpty()
 
-            rxBuffer, rxTipo, rxErro = com.rx.getNData()
+                    rxBuffer, rxTipo, rxErro, rxPacote, maxPacotes = com.rx.getNData()
+                
+                else:
+                    time.sleep(1)
+                    com.sendData(0,8,i)
+                    print("Envio 8, repedindo {}".format(i))
+
+                    com.rx.clearBuffer()
+
+                    inicio = time.time()
+                    timeout = 0
+                    while com.rx.getIsEmpty():
+                        timeout = time.time() - inicio
+                        if timeout >= 5:
+                            com.sendData(0,8,i)
+                            inicio = time.time()
+                        estado = com.rx.getIsEmpty()
+
+                    rxBuffer, rxTipo, rxErro, rxPacote, maxPacotes = com.rx.getNData()
+
+
+            imgNova = open(imgEscrita,'wb')
+            imgNova.write(bufferFinal)
+            imgNova.close()
+
+        flagPay = True
 
     if rxTipo == 7:
         print("-------------------------")

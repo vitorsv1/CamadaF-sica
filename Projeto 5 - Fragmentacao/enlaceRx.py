@@ -111,8 +111,8 @@ class RX(object):
         #self.timeout = time.time() - inicio
         dados = self.getBuffer(size) # DIFF
         #print(dados)
-        data,tipo = self.desempacota(dados)
-        return(data,tipo)# DIFF
+        data,tipo,erro,pacote,maximo = self.desempacota(dados)
+        return(data,tipo,erro,pacote,maximo)# DIFF
 
 
     def clearBuffer(self):
@@ -196,12 +196,18 @@ class RX(object):
         if correto:
             pay = dadoFiltro[headSize:flagEop]
             print("envio correto")
-            return pay,tipo
+            erro = 0
+            return pay,tipo,erro,pacote,maxPacotes
         else:
             if not corretoPay:
                 print("erro no tamanho do payload")
+                erro = 1
+                return -1,tipo,erro,pacote,maxPacotes
             elif not corretoEop:
                 print("erro no EOP")
+                erro = 2
+                return -1,tipo,erro,pacote,maxPacotes
             elif not corretoStuff:
                 print("erro na remocao do stuff")
-            return -1
+                erro = 3
+                return -1,tipo,erro,pacote,maxPacotes

@@ -51,12 +51,23 @@ class enlace(object):
     ################################
     # Application  interface       #
     ################################
-    def sendData(self, data,tipo):
+    def sendData(self, data,tipo,atual=0):
         """ Send data over the enlace interface
         """
-        pacote = self.tx.empacota(data,tipo)
+        pacote,quantidade,len_pays = self.tx.empacota(data,tipo)
+
         #print(pacote)
-        self.tx.sendBuffer(pacote)
+        if tipo == 4:
+            if atual == 0:
+                mensagem = pacote[:(10+len_pays[atual] - 1)]
+            elif atual == quantidade:
+                mensagem = pacote[(10+len_pays[atual-1]):]
+            else:
+                mensagem = pacote[(10+len_pays[atual-1]):(10+len_pays[atual] - 1)]
+        else:
+            mensagem = pacote
+
+        self.tx.sendBuffer(mensagem)
         time.sleep(1)
         throughput = len(pacote)/self.fisica.tempo
         print("Throughput: {} kB/s".format(throughput/1024))

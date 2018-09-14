@@ -39,8 +39,8 @@ def main():
     #Using try in case user types in unknown file or closes without choosing a file.
         return name 
     #imgLida = OpenFile() 
-    #imgLida = "/home/mateusenrico/Documentos/Insper/CamadaFisica/Projeto 5 - Fragmentacao/img/vai.png"
-    imgLida = imgEscrita = "/home/vitorsv/Dropbox/Insper/2018.2/Camada Física/CamadaFisica/Projeto 5 - Fragmentacao/img/vai.png"
+    imgLida = "/home/mateusenrico/Documentos/Insper/CamadaFisica/Projeto 5 - Fragmentacao/img/vai.png"
+    #imgLida = imgEscrita = "/home/vitorsv/Dropbox/Insper/2018.2/Camada Física/CamadaFisica/Projeto 5 - Fragmentacao/img/vai.png"
     img = open(imgLida,'rb')
     txBufferIMG = img.read()
     txLenIMG    = len(txBufferIMG)
@@ -80,56 +80,64 @@ def main():
         print("-------------------------")
         print("tentado transmitir .... {} bytes".format(txLenIMG)) ### data
 
+        sizeInteiro = len(txBufferIMG)
+        maxSize = 128
+        number = math.ceil(sizeInteiro/maxSize)
+
         time.sleep(1)
-        com.sendData(txBufferIMG,4)
-        # Atualiza dados da transmissão
-        txSize = com.tx.getStatus()
-        print("-------------------------")
-        print('Enviou 4')
-\
-    ack = False
-    if ack == False:
+        for i in range(number):
+            com.sendData(txBufferIMG,4,i)
+            # Atualiza dados da transmissão
+            txSize = com.tx.getStatus()
+            print("-------------------------")
+            print('Enviou 4, pacote {}'.format(i))
 
-        com.rx.clearBuffer()
+            ack = False
+            if ack == False:
 
-        inicio = time.time()
-        timeout = 0
-        while com.rx.getIsEmpty():
-            timeout = time.time() - inicio
-            if timeout >= 5:
-                com.sendData(txBufferIMG,4)
+                com.rx.clearBuffer()
+
                 inicio = time.time()
-            estado = com.rx.getIsEmpty()
+                timeout = 0
+                while com.rx.getIsEmpty():
+                    timeout = time.time() - inicio
+                    if timeout >= 5:
+                        com.sendData(txBufferIMG,4,i)
+                        inicio = time.time()
+                    estado = com.rx.getIsEmpty()
 
-        rxBuffer, rxTipo, rxErro = com.rx.getNData()
+                rxBuffer, rxTipo, rxErro = com.rx.getNData()
 
-        if rxTipo == 5:
-            print("-------------------------")
-            print("Chegou 5, envio foi correto")
-            time.sleep(1)
-            com.sendData(0,7)
-            print("-------------------------")
-            print("Enviou 7")
-            ack = True
-        elif rxTipo == 6:
-            print("-------------------------")
-            print("Chegou 6, reenviando 4")
-            time.sleep(1)
-            com.sendData(txBufferIMG,4)
-            ack = False
-        elif rxTipo == 8:
-            print("-------------------------")
-            print("Chegou 8, reenviando 4")
-            time.sleep(1)
-            #PACOTE ENCONTRADO COM ERRO SERA DEFINIDO AQUI PARA ENVIO
-            #com.sendData(, 4)
-            ack = False
-        else:
-            print("-------------------------")
-            print("Caso estranho")
+            if rxTipo == 5:
+                print("-------------------------")
+                print("Chegou 5, mais um envio foi correto")
+                time.sleep(1)
+                pass
+                #ack = True
+            elif rxTipo == 6:
+                print("-------------------------")
+                print("Chegou 6, reenviando 4, pacote {}".format(i))
+                time.sleep(1)
+                i -= 1
+                pass
+                #ack = False
+            elif rxTipo == 8:
+                print("-------------------------")
+                print("Chegou 8, reenviando 4, pacote {}".format(i))
+                time.sleep(1)
+                i -= i
+                pass
+            else:
+                print("-------------------------")
+                print("Caso estranho")
 
-    if ack == True:
-        com.disable()
+
+
+    com.sendData(0,7)
+    print("-------------------------")
+    print("Enviou 7")
+
+    com.disable()
 
     # Encerra comunicação
     print("-------------------------")

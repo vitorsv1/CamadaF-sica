@@ -91,25 +91,28 @@ class TX(object):
 
 #----------------Metodos-Novos----------------#
     # ERRO NESSA FUNÇÃO POIS A IMAGEM NÃO FORMA ADEQUADAMENTE
-    def empacota(self,dado,tipo):
+        def empacota(self,dado,tipo):
         tipoEncode = "utf-8"
         maxSize = 128 # ? bits pra representar o tamanho do payload
-        count = 1
         envio = bytearray()
-    
+        len_pays = []
+
+        if tipo == 4:
+                sizeInteiro = len(dado)
+                number = math.ceil(sizeInteiro/maxSize)
+                count = number
+        else:
+            count = 1
+
         while count != 0:
             msg = bytearray()
             head = bytearray()
             pay = bytearray()
             eop = bytearray()
 
-
             # PAYLOAD
             if tipo == 4:
-                sizeInteiro = len(dado)
-                number = math.ceil(sizeInteiro/maxSize)
                 atual = number - count
-                count = number
                 
                 if sizeInteiro <= maxSize:
                     size = sizeInteiro
@@ -183,11 +186,12 @@ class TX(object):
             msg.extend(eop)
             # ADICIONA A VARIAVEL PARA O BUFFER
             envio.extend(msg)
-            
+            print(count)
             count = count - 1
             #print(count)
+            len_pays.append(len(pay))
 
         overhead = (6 + maxSize + 4) / maxSize
         print("Overhead: {}%".format(overhead*100))
 
-        return(envio)
+        return(envio,number,len_pays)
