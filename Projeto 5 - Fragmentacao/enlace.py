@@ -59,11 +59,11 @@ class enlace(object):
         #print(pacote)
         if tipo == 4:
             if atual == 0:
-                mensagem = pacote[:(10+len_pays[atual] - 1)]
+                mensagem = pacote[:(10+len_pays[atual])]
             elif atual == quantidade:
-                mensagem = pacote[(10+len_pays[atual-1]):]
+                mensagem = pacote[(10+len_pays[atual-1])+1:]
             else:
-                mensagem = pacote[(10+len_pays[atual-1]):(10+len_pays[atual] - 1)]
+                mensagem = pacote[(10+len_pays[atual-1])+1:(10+len_pays[atual])]
         else:
             mensagem = pacote
 
