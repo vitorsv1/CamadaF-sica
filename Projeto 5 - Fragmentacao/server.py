@@ -6,6 +6,7 @@ print("comecou")
 
 from enlace import *
 import time
+import math
 from tkinter import filedialog, ttk
 from tkinter import *
 from tkinter.filedialog import askopenfilename
@@ -51,7 +52,7 @@ def main():
     while not com.rx.getIsEmpty:
         pass
 
-    rxBuffer, rxTipo, rxErro = com.rx.getNData()
+    rxBuffer, rxTipo, rxErro, rxPacote, maxPacotes = com.rx.getNData()
 
     if rxTipo == 1:
         print("-------------------------")
@@ -72,7 +73,7 @@ def main():
             inicio = time.time()
         estado = com.rx.getIsEmpty()
 
-    rxBuffer, rxTipo, rxErro = com.rx.getNData()
+    rxBuffer, rxTipo, rxErro, rxPacote, maxPacotes = com.rx.getNData()
 
     if rxTipo == 3:
         print("-------------------------")
@@ -106,7 +107,7 @@ def main():
                         inicio = time.time()
                     estado = com.rx.getIsEmpty()
 
-                rxBuffer, rxTipo, rxErro = com.rx.getNData()
+                rxBuffer, rxTipo, rxErro, rxPacote, maxPacotes = com.rx.getNData()
 
             if rxTipo == 5:
                 print("-------------------------")
