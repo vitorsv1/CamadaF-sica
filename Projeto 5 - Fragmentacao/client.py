@@ -57,6 +57,7 @@ def main():
         print("Enviou 3")
 
     flagPay = False
+    pontos = 0
     while not flagPay:
         com.rx.clearBuffer()
 
@@ -70,7 +71,6 @@ def main():
             estado = com.rx.getIsEmpty()
 
         rxBuffer, rxTipo, rxErro, rxPacote, maxPacotes = com.rx.getNData()
-
         if rxTipo == 4:
             print("-------------------------")
             print("Chegou 4")
@@ -84,6 +84,7 @@ def main():
                         print("-------------------------")
                         print("Enviou 5")
                         bufferFinal.extend(rxBuffer)
+                        pontos += 1
                         #flagPay = True
                     #ADICIONAR ELIFs PARA UM NOVO ERRO TIPO 8 A SER ENVIADO
                     else:
@@ -129,8 +130,8 @@ def main():
             imgNova = open(imgEscrita,'wb')
             imgNova.write(bufferFinal)
             imgNova.close()
-
-        flagPay = True
+        if pontos == maxPacotes + 1:    
+            flagPay = True
 
     if rxTipo == 7:
         print("-------------------------")
