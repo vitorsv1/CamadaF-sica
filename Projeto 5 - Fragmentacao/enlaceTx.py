@@ -162,10 +162,10 @@ class TX(object):
             #So foi dado extend
 
             # EOP
-            primeiro = maxSize
-            segundo = maxSize - 1
-            terceiro = maxSize - 2
-            quarto = maxSize - 3
+            primeiro = 255 #maxSize
+            segundo = 254 #maxSize - 1
+            terceiro = 253 #maxSize - 2
+            quarto = 252 #maxSize - 3
 
             # MONTANDO #
             head.extend(size.to_bytes(1,'big')) 

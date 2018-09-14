@@ -117,7 +117,7 @@ def main():
             time.sleep(1)
             com.sendData(txBufferIMG,4)
             ack = False
-        elif rxTipe == 8:
+        elif rxTipo == 8:
             print("-------------------------")
             print("Chegou 8, reenviando 4")
             time.sleep(1)
