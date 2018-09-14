@@ -99,8 +99,6 @@ class RX(object):
 
         This function blocks until the number of bytes is received
         """
-#        temPraLer = self.getBufferLen()
-#        print('leu %s ' + str(temPraLer) )
         
         #if self.getBufferLen() < size:
             #print("ERROS!!! TERIA DE LER %s E LEU APENAS %s", (size,temPraLer))
@@ -131,6 +129,7 @@ class RX(object):
         head = bytearray()
         pay = bytearray()
         eop = bytearray()
+        
     
         for i in dado:
             if count < headType:
@@ -142,6 +141,7 @@ class RX(object):
                 count += 1
         tamanho = head[0]
         tipo = head[1]
+        #MUDAR OS VALORES QUE MULTIPLICAM O PACOTE E MAXPACOTE
         pacote = head[2] * 256 + head[3]
         maxPacotes = head[4] * 256 + head[5]
         
@@ -156,8 +156,10 @@ class RX(object):
 
         for i in range(len(dado)):
             if i + 3 < len(dado):
+                #MUDAR OS VALORES DOS IFs PARA OS LIDOS NO HEAD COM O TAMANHO DO PAYLOAD, PAYLOAD -1 ...
                 if dado[i] == 255 and dado[i+1] == 254 and dado[i+2] == 253 and dado[i+3] == 252: #0xFF 0xFE 0xFD 0xFC
                     if i - 2 > 0:
+                        #PROVAVELMENTE MUDE AQUI TBM COM A MUDANÇA DO PAYLOAD
                         if dado[i-2] == 221 and dado[i-1] == 238: #2 bytes, 0xDD e 0xEE
                             stuff = True
                             flagStuff.append(i-2)

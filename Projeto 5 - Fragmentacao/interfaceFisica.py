@@ -79,6 +79,7 @@ class fisica(object):
         self.port.flush()
         stop = time.time()
         tempo = stop - start
+        print("---------------------------------")
         print("Tempo efetivo")
         print(tempo)
         self.tempo = tempo

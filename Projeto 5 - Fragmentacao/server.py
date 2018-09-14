@@ -39,22 +39,26 @@ def main():
     #Using try in case user types in unknown file or closes without choosing a file.
         return name 
     #imgLida = OpenFile() 
-    imgLida = "/home/mateusenrico/Documentos/Insper/CamadaFisica/Projeto 4 - HandShake/img/vai.png"
+    #imgLida = "/home/mateusenrico/Documentos/Insper/CamadaFisica/Projeto 5 - Fragmentacao/img/vai.png"
+    imgLida = imgEscrita = "/home/vitorsv/Dropbox/Insper/2018.2/Camada Física/CamadaFisica/Projeto 5 - Fragmentacao/img/vai.png"
     img = open(imgLida,'rb')
     txBufferIMG = img.read()
     txLenIMG    = len(txBufferIMG)
+    print("-------------------------")
     print("Tempo esperado para conteudo")
     print("{} s".format(txLenIMG*10/com.baudrate))
 
     while not com.rx.getIsEmpty:
         pass
 
-    rxBuffer, rxTipo = com.rx.getNData()
+    rxBuffer, rxTipo, rxErro = com.rx.getNData()
 
     if rxTipo == 1:
+        print("-------------------------")
         print('Chegou 1')
-        time.sleep(3)
+        time.sleep(1)
         com.sendData(0,2)
+        print("-------------------------")
         print('Enviou 2')
 
     com.rx.clearBuffer()
@@ -66,19 +70,23 @@ def main():
         if timeout >= 5:
             com.sendData(0,2)
             inicio = time.time()
+        estado = com.rx.getIsEmpty()
 
-    rxBuffer, rxTipo = com.rx.getNData()
+    rxBuffer, rxTipo, rxErro = com.rx.getNData()
 
     if rxTipo == 3:
+        print("-------------------------")
         print('Chegou 3')
-
+        print("-------------------------")
         print("tentado transmitir .... {} bytes".format(txLenIMG)) ### data
 
+        time.sleep(1)
         com.sendData(txBufferIMG,4)
         # Atualiza dados da transmissão
         txSize = com.tx.getStatus()
+        print("-------------------------")
         print('Enviou 4')
-
+\
     ack = False
     if ack == False:
 
@@ -89,22 +97,36 @@ def main():
         while com.rx.getIsEmpty():
             timeout = time.time() - inicio
             if timeout >= 5:
-                com.sendData(0,4)
+                com.sendData(txBufferIMG,4)
                 inicio = time.time()
+            estado = com.rx.getIsEmpty()
 
-        rxBuffer, rxTipo = com.rx.getNData()
+        rxBuffer, rxTipo, rxErro = com.rx.getNData()
 
         if rxTipo == 5:
+            print("-------------------------")
             print("Chegou 5, envio foi correto")
+            time.sleep(1)
             com.sendData(0,7)
+            print("-------------------------")
             print("Enviou 7")
             ack = True
         elif rxTipo == 6:
+            print("-------------------------")
             print("Chegou 6, reenviando 4")
+            time.sleep(1)
             com.sendData(txBufferIMG,4)
             ack = False
+        elif rxTipe == 8:
+            print("-------------------------")
+            print("Chegou 8, reenviando 4")
+            time.sleep(1)
+            #PACOTE ENCONTRADO COM ERRO SERA DEFINIDO AQUI PARA ENVIO
+            #com.sendData(, 4)
+            ack = False
         else:
-            print("caso estranho")
+            print("-------------------------")
+            print("Caso estranho")
 
     if ack == True:
         com.disable()

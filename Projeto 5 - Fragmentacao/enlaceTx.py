@@ -36,7 +36,6 @@ class TX(object):
         while not self.threadStop:
             if(self.threadMutex):
                 self.transLen    = self.fisica.write(self.buffer)
-                #print("O tamanho transmitido. IMpressao dentro do thread {}" .format(self.transLen))
                 self.threadMutex = False
 
     def threadStart(self):
@@ -94,7 +93,7 @@ class TX(object):
     # ERRO NESSA FUNÇÃO POIS A IMAGEM NÃO FORMA ADEQUADAMENTE
     def empacota(self,dado,tipo):
         tipoEncode = "utf-8"
-        maxSize = 255 # 8 bits pra representar o tamanho do payload
+        maxSize = 128 # ? bits pra representar o tamanho do payload
         count = 1
         envio = bytearray()
     
@@ -133,12 +132,13 @@ class TX(object):
 
                 for i in range(len(dado)):
                     if i + 3 < len(dado):
-                        if dado[i] == 255 and dado[i+1] == 254 and dado[i+2] == 253 and dado[i+3] == 252: #0xFF 0xFE 0xFD 0xFC
+                        if dado[i] == maxSize and dado[i+1] == (maxSize-1) and dado[i+2] == (maxSize-2) and dado[i+3] == (maxSize-3): #0xFF 0xFE 0xFD 0xFC
                             flagStuff.append(i)
                             stuff = True
                 
                 cargaFiltro = bytearray()
                 contador = 0
+                #PRECISE MUDAR O STUFF PELO TAMANHO maxSize MUDAR PARA 128
                 primeiroStuff = 221
                 segundoStuff = 238
                 if stuff: 
@@ -162,10 +162,10 @@ class TX(object):
             #So foi dado extend
 
             # EOP
-            primeiro = 255
-            segundo = 254
-            terceiro = 253
-            quarto = 252
+            primeiro = maxSize
+            segundo = maxSize - 1
+            terceiro = maxSize - 2
+            quarto = maxSize - 3
 
             # MONTANDO #
             head.extend(size.to_bytes(1,'big')) 
