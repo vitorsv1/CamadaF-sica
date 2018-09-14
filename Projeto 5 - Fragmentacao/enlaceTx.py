@@ -91,107 +91,107 @@ class TX(object):
 
 #----------------Metodos-Novos----------------#
     # ERRO NESSA FUNÇÃO POIS A IMAGEM NÃO FORMA ADEQUADAMENTE
-        def empacota(self,dado,tipo):
-            tipoEncode = "utf-8"
-            maxSize = 128 # ? bits pra representar o tamanho do payload
-            envio = bytearray()
-            len_pays = []
+    def empacota(self,dado,tipo):
+        tipoEncode = "utf-8"
+        maxSize = 128 # ? bits pra representar o tamanho do payload
+        envio = bytearray()
+        len_pays = []
 
+        if tipo == 4:
+                sizeInteiro = len(dado)
+                number = math.ceil(sizeInteiro/maxSize)
+                count = number
+        else:
+            count = 1
+
+        while count != 0:
+            msg = bytearray()
+            head = bytearray()
+            pay = bytearray()
+            eop = bytearray()
+
+            # PAYLOAD
             if tipo == 4:
-                    sizeInteiro = len(dado)
-                    number = math.ceil(sizeInteiro/maxSize)
-                    count = number
-            else:
-                count = 1
-
-            while count != 0:
-                msg = bytearray()
-                head = bytearray()
-                pay = bytearray()
-                eop = bytearray()
-
-                # PAYLOAD
-                if tipo == 4:
-                    atual = number - count
-                    
-                    if sizeInteiro <= maxSize:
-                        size = sizeInteiro
-                        carga = dado[0:]
-                    else:
-                        if count == 1:
-                            size = sizeInteiro - (number - 1)*maxSize
-                            carga = dado[(maxSize*atual+1):]
-                        else:
-                            if atual == 0:
-                                adendo = 0
-                            else:
-                                adendo = 1
-
-                            size = maxSize
-                            carga = dado[(maxSize*atual+adendo):(maxSize*(atual+1))]
-                        
-                    flagStuff = []
-                    stuff = False
-
-                    for i in range(len(dado)):
-                        if i + 3 < len(dado):
-                            if dado[i] == maxSize and dado[i+1] == (maxSize-1) and dado[i+2] == (maxSize-2) and dado[i+3] == (maxSize-3): #0xFF 0xFE 0xFD 0xFC
-                                flagStuff.append(i)
-                                stuff = True
-                    
-                    cargaFiltro = bytearray()
-                    contador = 0
-                    #PRECISE MUDAR O STUFF PELO TAMANHO maxSize MUDAR PARA 128
-                    primeiroStuff = 221
-                    segundoStuff = 238
-                    if stuff: 
-                        for i in flagStuff:
-                            cargaFiltro = carga[:i-2*contador]
-                            cargaFiltro.extend(primeiroStuff.to_bytes(1,'big'))
-                            cargaFiltro.extend(segundoStuff.to_bytes(1,'big'))
-                            cargaFiltro += carga[i-2*contador:]
-                            contador += 1
-                    else:
-                        cargaFiltro = carga
-
-                    pay.extend(bytes(cargaFiltro))
+                atual = number - count
                 
+                if sizeInteiro <= maxSize:
+                    size = sizeInteiro
+                    carga = dado[0:]
                 else:
-                    atual = 0
-                    number = 1
-                    size = 1
-                    pay.extend(dado.to_bytes(1,'big'))
-                # HEAD
-                #So foi dado extend
+                    if count == 1:
+                        size = sizeInteiro - (number - 1)*maxSize
+                        carga = dado[(maxSize*atual+1):]
+                    else:
+                        if atual == 0:
+                            adendo = 0
+                        else:
+                            adendo = 1
 
-                # EOP
-                primeiro = 255 #maxSize
-                segundo = 254 #maxSize - 1
-                terceiro = 253 #maxSize - 2
-                quarto = 252 #maxSize - 3
+                        size = maxSize
+                        carga = dado[(maxSize*atual+adendo):(maxSize*(atual+1))]
+                    
+                flagStuff = []
+                stuff = False
 
-                # MONTANDO #
-                head.extend(size.to_bytes(1,'big')) 
-                head.extend(tipo.to_bytes(1,'big'))
-                head.extend(atual.to_bytes(2,'big'))
-                head.extend((number-1).to_bytes(2,'big'))
+                for i in range(len(dado)):
+                    if i + 3 < len(dado):
+                        if dado[i] == maxSize and dado[i+1] == (maxSize-1) and dado[i+2] == (maxSize-2) and dado[i+3] == (maxSize-3): #0xFF 0xFE 0xFD 0xFC
+                            flagStuff.append(i)
+                            stuff = True
+                
+                cargaFiltro = bytearray()
+                contador = 0
+                #PRECISE MUDAR O STUFF PELO TAMANHO maxSize MUDAR PARA 128
+                primeiroStuff = 221
+                segundoStuff = 238
+                if stuff: 
+                    for i in flagStuff:
+                        cargaFiltro = carga[:i-2*contador]
+                        cargaFiltro.extend(primeiroStuff.to_bytes(1,'big'))
+                        cargaFiltro.extend(segundoStuff.to_bytes(1,'big'))
+                        cargaFiltro += carga[i-2*contador:]
+                        contador += 1
+                else:
+                    cargaFiltro = carga
 
-                eop.extend(primeiro.to_bytes(1,'big'))
-                eop.extend(segundo.to_bytes(1,'big'))
-                eop.extend(terceiro.to_bytes(1,'big'))
-                eop.extend(quarto.to_bytes(1,'big'))
+                pay.extend(bytes(cargaFiltro))
+            
+            else:
+                atual = 0
+                number = 1
+                size = 1
+                pay.extend(dado.to_bytes(1,'big'))
+            # HEAD
+            #So foi dado extend
 
-                msg.extend(head)
-                msg.extend(pay)
-                msg.extend(eop)
-                # ADICIONA A VARIAVEL PARA O BUFFER
-                envio.extend(msg)
-                print(count)
-                count = count - 1
-                #print(count)
-                len_pays.append(len(pay))
+            # EOP
+            primeiro = 255 #maxSize
+            segundo = 254 #maxSize - 1
+            terceiro = 253 #maxSize - 2
+            quarto = 252 #maxSize - 3
 
-            overhead = (6 + maxSize + 4) / maxSize
-            print("Overhead: {}%".format(overhead*100))
+            # MONTANDO #
+            head.extend(size.to_bytes(1,'big')) 
+            head.extend(tipo.to_bytes(1,'big'))
+            head.extend(atual.to_bytes(2,'big'))
+            head.extend((number-1).to_bytes(2,'big'))
 
-            return(envio,number,len_pays)
+            eop.extend(primeiro.to_bytes(1,'big'))
+            eop.extend(segundo.to_bytes(1,'big'))
+            eop.extend(terceiro.to_bytes(1,'big'))
+            eop.extend(quarto.to_bytes(1,'big'))
+
+            msg.extend(head)
+            msg.extend(pay)
+            msg.extend(eop)
+            # ADICIONA A VARIAVEL PARA O BUFFER
+            envio.extend(msg)
+            print(count)
+            count = count - 1
+            #print(count)
+            len_pays.append(len(pay))
+
+        overhead = (6 + maxSize + 4) / maxSize
+        print("Overhead: {}%".format(overhead*100))
+
+        return(envio,number,len_pays)
