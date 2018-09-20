@@ -62,16 +62,18 @@ def main():
     flagPay = False
     pontos = 0
     while not flagPay:
-        
+
+       #com.rx.clearBuffer()
+
         rxBuffer, rxTipo, rxErro, rxPacote, maxPacotes = com.rx.getNData()
         
         if rxTipo == 4:
             print("-------------------------")
             print("Chegou 4 com {} pacotes".format(maxPacotes))
             bufferFinal = bytearray()
-            for i in range(maxPacotes+1):
-                print("BUFFER DO TIPO 4")
-                print(rxBuffer)
+            for i in range(maxPacotes):
+                #print("BUFFER DO TIPO 4")
+                #print(rxBuffer)
                 print("PACOTE: {}".format(i))
                 if rxPacote == i:
                     if rxErro == 0:
@@ -81,6 +83,8 @@ def main():
                         print("-------------------------")
                         print("Enviou 5")
                         bufferFinal.extend(rxBuffer)
+                        print("BUFFER FINAL")
+                        print(bufferFinal)
                         pontos += 1
                         print("PONTOS É {}".format(pontos))
                         #flagPay = True
@@ -91,7 +95,10 @@ def main():
                         print("-------------------------")
                         print("Enviou 6,pedindo {}".format(rxPacote))
                         #flagPay = False
-                
+
+                    print("PEGANDO BUFFER NOVO TIPO 4")
+                    rxBuffer, rxTipo, rxErro, rxPacote, maxPacotes = com.rx.getNData()
+
                 else:
                     time.sleep(1)
                     com.sendData(0,8,i)
@@ -105,15 +112,21 @@ def main():
                             com.sendData(0,8,i)
                             inicio = time.time()
                         estado = com.rx.getIsEmpty()
+                rxBuffer, rxTipo, rxErro, rxPacote, maxPacotes = com.rx.getNData()
             
             print("REPETE")
-            rxBuffer, rxTipo, rxErro, rxPacote, maxPacotes = com.rx.getNData()
+            
 
             imgNova = open(imgEscrita,'wb')
             imgNova.write(bufferFinal)
             imgNova.close()
-        if pontos == (maxPacotes+1):    
+        if pontos == (maxPacotes+1):
+            print("deu")    
             flagPay = True
+
+    while com.rx.getIsEmpty():
+        pass
+    
 
     if rxTipo == 7:
         print("-------------------------")
