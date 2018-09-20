@@ -166,10 +166,7 @@ class RX(object):
                             flagStuff.append(i-2)
                         else:
                             corretoEop = True
-                            if pacote != 0:
-                                flagEop = i + 1
-                            else:
-                                flagEop = i
+                            flagEop = i
                             print("INTERNO FLAG: {}".format(flagEop))
                             break
 

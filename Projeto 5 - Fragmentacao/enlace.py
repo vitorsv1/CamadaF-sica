@@ -54,7 +54,7 @@ class enlace(object):
     def sendData(self, data,tipo,atual=0):
         """ Send data over the enlace interface
         """
-        print(data)
+        #print(data)
         pacote,quantidade,len_pays = self.tx.empacota(data,tipo)
         quantidade -= 1
         #print("PACOTE QUE CHEGOU DO EMPACOTA")

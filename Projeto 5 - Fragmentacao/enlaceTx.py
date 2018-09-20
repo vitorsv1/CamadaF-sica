@@ -120,7 +120,7 @@ class TX(object):
                 else:
                     if count == 1:
                         size = sizeInteiro - (number - 1)*maxSize
-                        carga = dado[(maxSize*atual+1):]
+                        carga = dado[(maxSize*atual):]
                     else:
                         if atual == 0:
                             adendo = 0
