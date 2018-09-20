@@ -132,7 +132,7 @@ def main():
                 break
 
 
-    time.sleep(3)
+    time.sleep(5)
     com.sendData(0,7)
     print("-------------------------")
     print("Enviou 7")

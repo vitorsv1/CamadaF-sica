@@ -115,7 +115,11 @@ def main():
                 rxBuffer, rxTipo, rxErro, rxPacote, maxPacotes = com.rx.getNData()
             
             print("REPETE")
+<<<<<<< HEAD
             
+=======
+            #rxBuffer, rxTipo, rxErro, rxPacote, maxPacotes = com.rx.getNData()
+>>>>>>> b0693b15692bbbd478f7be09442ff36c6c99d3f0
 
             imgNova = open(imgEscrita,'wb')
             imgNova.write(bufferFinal)
