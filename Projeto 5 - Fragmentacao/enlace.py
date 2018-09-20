@@ -67,7 +67,7 @@ class enlace(object):
                 mensagem = pacote[:(10+len_pays[atual])]
             elif atual == quantidade:
                 print('entrou quantidade')
-                mensagem = pacote[(10+len_pays[atual-1])+1:]
+                mensagem = pacote[(10+len_pays[atual-1]+1):]
             else:
                 print('entrou resto')
                 mensagem = pacote[(10+len_pays[atual-1])+1:(10+len_pays[atual])]
