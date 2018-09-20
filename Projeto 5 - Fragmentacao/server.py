@@ -11,7 +11,7 @@ from tkinter import filedialog, ttk
 from tkinter import *
 from tkinter.filedialog import askopenfilename
  
-serialName = "/dev/ttyACM0"           # Ubuntu (variacao de)
+serialName = "/dev/ttyACM1"           # Ubuntu (variacao de)
 #serialName = "COM4"                  # Windows(variacao de)
 
 
@@ -40,8 +40,9 @@ def main():
     #Using try in case user types in unknown file or closes without choosing a file.
         return name 
     #imgLida = OpenFile() 
-    imgLida = "/home/mateusenrico/Documentos/Insper/CamadaFisica/Projeto 5 - Fragmentacao/img/vai.png"
+    #imgLida = "/home/mateusenrico/Documentos/Insper/CamadaFisica/Projeto 5 - Fragmentacao/img/vai.png"
     #imgLida = imgEscrita = "/home/vitorsv/Dropbox/Insper/2018.2/Camada Física/CamadaFisica/Projeto 5 - Fragmentacao/img/vai.png"
+    imgLida = imgEscrita = "/home/vitorsv/Dropbox/Insper/2018.2/Camada Física/CamadaFisica/Projeto 5 - Fragmentacao/img/x.png"
     img = open(imgLida,'rb')
     txBufferIMG = img.read()
     txLenIMG    = len(txBufferIMG)
@@ -53,7 +54,7 @@ def main():
         pass
 
     rxBuffer, rxTipo, rxErro, rxPacote, maxPacotes = com.rx.getNData()
-
+    print("Vendo se chegou 1")
     if rxTipo == 1:
         print("-------------------------")
         print('Chegou 1')
@@ -82,27 +83,26 @@ def main():
         print("tentado transmitir .... {} bytes".format(txLenIMG)) ### data
 
         sizeInteiro = len(txBufferIMG)
-        maxSize = 128
+        maxSize = 255
         number = math.ceil(sizeInteiro/maxSize)
 
-        time.sleep(1)
+       
         for i in range(number):
+            time.sleep(1)
             com.sendData(txBufferIMG,4,i)
             # Atualiza dados da transmissão
             txSize = com.tx.getStatus()
             print("-------------------------")
-            print('Enviou 4, pacote {}'.format(i))
+            print('Enviou 4, pacote {}'.format(i+1))
 
             ack = False
             if ack == False:
-
-                com.rx.clearBuffer()
-
                 inicio = time.time()
                 timeout = 0
                 while com.rx.getIsEmpty():
                     timeout = time.time() - inicio
                     if timeout >= 5:
+                        time.sleep(1)
                         com.sendData(txBufferIMG,4,i)
                         inicio = time.time()
                     estado = com.rx.getIsEmpty()
@@ -133,7 +133,7 @@ def main():
                 print("Caso estranho")
 
 
-
+    time.sleep(3)
     com.sendData(0,7)
     print("-------------------------")
     print("Enviou 7")

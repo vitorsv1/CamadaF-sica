@@ -25,7 +25,7 @@ from tkinter.filedialog import askopenfilename
 #   python -m serial.tools.list_ports
 # se estiver usando windows, o gerenciador de dispositivos informa a porta
 
-serialName = "/dev/ttyACM0"           # Ubuntu (variacao de)
+serialName = "/dev/ttyACM1"           # Ubuntu (variacao de)
 #serialName = "/dev/tty.usbmodem1411" # Mac    (variacao de)
 #serialName = "COM4"                  # Windows(variacao de)
 

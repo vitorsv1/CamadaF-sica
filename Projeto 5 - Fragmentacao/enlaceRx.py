@@ -143,7 +143,7 @@ class RX(object):
         tipo = head[1]
         #MUDAR OS VALORES QUE MULTIPLICAM O PACOTE E MAXPACOTE
         pacote = head[2] * 256 + head[3]
-        maxPacotes = head[4] * 256 + head[5]
+        maxPacotes = head[4] * 256 + head[5] + 1
         
 
         count = 1

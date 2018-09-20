@@ -55,8 +55,10 @@ class enlace(object):
         """ Send data over the enlace interface
         """
         pacote,quantidade,len_pays = self.tx.empacota(data,tipo)
-
-        #print(pacote)
+        print("PACOTE QUE CHEGOU DO EMPACOTA")
+        print(pacote)
+        print("######################################")
+        print("VALOR DO ATUAL É {}".format(atual))
         if tipo == 4:
             if atual == 0:
                 mensagem = pacote[:(10+len_pays[atual])]
@@ -70,6 +72,7 @@ class enlace(object):
         self.tx.sendBuffer(mensagem)
         time.sleep(1)
         throughput = len(pacote)/self.fisica.tempo
+        print("Mensagem a ser enviada")
         print(mensagem)
         print("Throughput: {} kB/s".format(throughput/1024))
 

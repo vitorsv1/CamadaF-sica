@@ -40,10 +40,13 @@ def main():
     timeout = 0
     estado = com.rx.getIsEmpty()
     while com.rx.getIsEmpty():
-        timeout = time.time() - inicio
-        if timeout >= 5:
-            com.sendData(0,1)
-            inicio = time.time()
+        #timeout = time.time() - inicio
+        #if timeout >= 5:
+        print("------------------")
+        print("Enviou 1")
+        time.sleep(1)
+        com.sendData(0,1)
+        inicio = time.time()
         estado = com.rx.getIsEmpty()
 
     rxBuffer, rxTipo, rxErro, rxPacote, maxPacotes = com.rx.getNData()
@@ -59,25 +62,28 @@ def main():
     flagPay = False
     pontos = 0
     while not flagPay:
-        com.rx.clearBuffer()
-
         inicio = time.time()
         timeout = 0
         while com.rx.getIsEmpty():
             timeout = time.time() - inicio
             if timeout >= 5:
+                time.sleep(1)
                 com.sendData(0,3)
                 inicio = time.time()
             estado = com.rx.getIsEmpty()
-
+        
+        com.rx.clearBuffer()
+        
         rxBuffer, rxTipo, rxErro, rxPacote, maxPacotes = com.rx.getNData()
-
+        
         if rxTipo == 4:
             print("-------------------------")
-            print("Chegou 4")
+            print("Chegou 4 com {} pacotes".format(maxPacotes))
             bufferFinal = bytearray()
             for i in range(maxPacotes):
+                print("BUFFER ATUAL")
                 print(rxBuffer)
+                print("Pacote {}".format(i))
                 if rxPacote == i:
                     if rxErro == 0:
                         acknack = 5
@@ -104,6 +110,7 @@ def main():
                     while com.rx.getIsEmpty():
                         timeout = time.time() - inicio
                         if timeout >= 5:
+                            time.sleep(1)
                             com.sendData(0,acknack)
                             inicio = time.time()
                         estado = com.rx.getIsEmpty()
@@ -114,25 +121,22 @@ def main():
                     time.sleep(1)
                     com.sendData(0,8,i)
                     print("Envio 8, repedindo {}".format(i))
-
-                    com.rx.clearBuffer()
-
                     inicio = time.time()
                     timeout = 0
                     while com.rx.getIsEmpty():
                         timeout = time.time() - inicio
                         if timeout >= 5:
+                            time.sleep(1)
                             com.sendData(0,8,i)
                             inicio = time.time()
                         estado = com.rx.getIsEmpty()
-
-                    rxBuffer, rxTipo, rxErro, rxPacote, maxPacotes = com.rx.getNData()
-
+            
+            rxBuffer, rxTipo, rxErro, rxPacote, maxPacotes = com.rx.getNData()
 
             imgNova = open(imgEscrita,'wb')
             imgNova.write(bufferFinal)
             imgNova.close()
-        if pontos == maxPacotes + 1:    
+        if pontos == maxPacotes:    
             flagPay = True
 
     if rxTipo == 7:
