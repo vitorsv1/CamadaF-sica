@@ -123,7 +123,7 @@ class RX(object):
     #----------------Metodos-Novos----------------#
     def desempacota(self,dado):
         # Info
-        headSize = 6
+        headSize = 4
         headType = 4
         count = 0
         head = bytearray()
@@ -137,13 +137,13 @@ class RX(object):
                 if count == 0 or count == 1:
                     head.extend(i.to_bytes(1,'big'))
                 else:
-                    head.extend(i.to_bytes(2,'big'))
+                    head.extend(i.to_bytes(1,'big'))
                 count += 1
         tamanho = head[0]
         tipo = head[1]
         #MUDAR OS VALORES QUE MULTIPLICAM O PACOTE E MAXPACOTE
-        pacote = head[2] * 256 + head[3]
-        maxPacotes = head[4] * 256 + head[5] + 1
+        pacote = head[2]
+        maxPacotes = head[3]
         
 
         count = 1

@@ -173,8 +173,8 @@ class TX(object):
             # MONTANDO #
             head.extend(size.to_bytes(1,'big')) 
             head.extend(tipo.to_bytes(1,'big'))
-            head.extend(atual.to_bytes(2,'big'))
-            head.extend((number-1).to_bytes(2,'big'))
+            head.extend(atual.to_bytes(1,'big'))
+            head.extend((number-1).to_bytes(1,'big'))
 
             eop.extend(primeiro.to_bytes(1,'big'))
             eop.extend(segundo.to_bytes(1,'big'))
