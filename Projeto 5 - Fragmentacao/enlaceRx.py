@@ -189,6 +189,7 @@ class RX(object):
             corretoStuff = True
 
         print ("Subtracao {}".format(flagEop-headSize))
+        print("Tamanho {}".format(tamanho))
         if (flagEop - headSize) == tamanho:
             corretoPay = True
 
