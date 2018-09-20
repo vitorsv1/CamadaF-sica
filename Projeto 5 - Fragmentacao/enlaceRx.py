@@ -144,6 +144,7 @@ class RX(object):
         #MUDAR OS VALORES QUE MULTIPLICAM O PACOTE E MAXPACOTE
         pacote = head[2]
         maxPacotes = head[3]
+        print("head {}".format(head))
         
 
         count = 1
