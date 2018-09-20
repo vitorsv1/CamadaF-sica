@@ -69,7 +69,7 @@ def main():
             print("-------------------------")
             print("Chegou 4 com {} pacotes".format(maxPacotes))
             bufferFinal = bytearray()
-            for i in range(maxPacotes):
+            for i in range(maxPacotes+1):
                 print("BUFFER DO TIPO 4")
                 print(rxBuffer)
                 print("PACOTE: {}".format(i))
@@ -106,13 +106,13 @@ def main():
                             inicio = time.time()
                         estado = com.rx.getIsEmpty()
             
-            
+            print("REPETE")
             rxBuffer, rxTipo, rxErro, rxPacote, maxPacotes = com.rx.getNData()
 
             imgNova = open(imgEscrita,'wb')
             imgNova.write(bufferFinal)
             imgNova.close()
-        if pontos == maxPacotes:    
+        if pontos == (maxPacotes+1):    
             flagPay = True
 
     if rxTipo == 7:

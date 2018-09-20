@@ -80,7 +80,7 @@ def main():
             print("-------------------------")
             print("Chegou 4 com {} pacotes".format(maxPacotes))
             bufferFinal = bytearray()
-            for i in range(maxPacotes):
+            for i in range(maxPacotes+1):
                 print("BUFFER ATUAL")
                 print(rxBuffer)
                 print("Pacote {}".format(i))
