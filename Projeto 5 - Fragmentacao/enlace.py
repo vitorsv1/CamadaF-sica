@@ -61,6 +61,7 @@ class enlace(object):
         print("######################################")
         print("VALOR DO ATUAL É {}".format(atual))
         print("QUANTIDADE: {}".format(quantidade))
+        print(pacote)
         if tipo == 4:
             if atual == 0:
                 print('entrou 0')
@@ -70,7 +71,7 @@ class enlace(object):
                 mensagem = pacote[(8+len_pays[atual-1]):]
             else:
                 print('entrou resto')
-                mensagem = pacote[(8+len_pays[atual-1])+1:(8+len_pays[atual])]
+                mensagem = pacote[(8+len_pays[atual-1]):(8+len_pays[atual])]
         else:
             mensagem = pacote
 
