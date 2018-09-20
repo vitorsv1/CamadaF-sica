@@ -107,7 +107,7 @@ def main():
                         estado = com.rx.getIsEmpty()
             
             print("REPETE")
-            rxBuffer, rxTipo, rxErro, rxPacote, maxPacotes = com.rx.getNData()
+            #rxBuffer, rxTipo, rxErro, rxPacote, maxPacotes = com.rx.getNData()
 
             imgNova = open(imgEscrita,'wb')
             imgNova.write(bufferFinal)

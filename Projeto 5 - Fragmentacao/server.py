@@ -86,9 +86,8 @@ def main():
         maxSize = 255
         number = math.ceil(sizeInteiro/maxSize)
 
-        i = -1
+        i = 0
         while i < number:
-            i += 1
             time.sleep(1)
             com.sendData(txBufferIMG,4,i)
             # Atualiza dados da transmssão
@@ -113,20 +112,19 @@ def main():
                 print("-------------------------")
                 print("Chegou 5, mais um envio foi correto")
                 time.sleep(1)
+                i += 1
                 pass
                 #ack = True
             elif rxTipo == 6:
                 print("-------------------------")
                 print("Chegou 6, reenviando 4, pacote {}".format(i))
                 time.sleep(1)
-                i -= 1
                 pass
                 #ack = False
             elif rxTipo == 8:
                 print("-------------------------")
                 print("Chegou 8, reenviando 4, pacote {}".format(i))
                 time.sleep(1)
-                i -= i
                 pass
             else:
                 print("-------------------------")
@@ -134,7 +132,7 @@ def main():
                 break
 
 
-    time.sleep(3)
+    time.sleep(5)
     com.sendData(0,7)
     print("-------------------------")
     print("Enviou 7")
