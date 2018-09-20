@@ -61,10 +61,13 @@ class enlace(object):
         print("VALOR DO ATUAL É {}".format(atual))
         if tipo == 4:
             if atual == 0:
+                print('entrou 0')
                 mensagem = pacote[:(10+len_pays[atual])]
             elif atual == quantidade:
+                print('entrou quantidade')
                 mensagem = pacote[(10+len_pays[atual-1])+1:]
             else:
+                print('entrou resto')
                 mensagem = pacote[(10+len_pays[atual-1])+1:(10+len_pays[atual])]
         else:
             mensagem = pacote

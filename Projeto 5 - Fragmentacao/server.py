@@ -40,7 +40,7 @@ def main():
     #Using try in case user types in unknown file or closes without choosing a file.
         return name 
     #imgLida = OpenFile() 
-    imgLida = "/home/mateusenrico/Documentos/Insper/CamadaFisica/Projeto 5 - Fragmentacao/img/vai.png"
+    imgLida = "/home/mateusenrico/Documentos/Insper/CamadaFisica/Projeto 5 - Fragmentacao/img/x.png"
     #imgLida = imgEscrita = "/home/vitorsv/Dropbox/Insper/2018.2/Camada Física/CamadaFisica/Projeto 5 - Fragmentacao/img/vai.png"
     #imgLida = imgEscrita = "/home/vitorsv/Dropbox/Insper/2018.2/Camada Física/CamadaFisica/Projeto 5 - Fragmentacao/img/x.png"
     img = open(imgLida,'rb')
@@ -94,7 +94,6 @@ def main():
             txSize = com.tx.getStatus()
             print("-------------------------")
             print('Enviou 4, pacote {}'.format(i+1))
-
             ack = False
             if ack == False:
                 inicio = time.time()
