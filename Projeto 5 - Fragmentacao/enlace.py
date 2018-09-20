@@ -54,6 +54,7 @@ class enlace(object):
     def sendData(self, data,tipo,atual=0):
         """ Send data over the enlace interface
         """
+        print(data)
         pacote,quantidade,len_pays = self.tx.empacota(data,tipo)
         quantidade -= 1
         #print("PACOTE QUE CHEGOU DO EMPACOTA")
@@ -61,7 +62,7 @@ class enlace(object):
         print("######################################")
         print("VALOR DO ATUAL É {}".format(atual))
         print("QUANTIDADE: {}".format(quantidade))
-        print(pacote)
+        #print(pacote)
         if tipo == 4:
             if atual == 0:
                 print('entrou 0')
