@@ -40,7 +40,7 @@ def main():
     #Using try in case user types in unknown file or closes without choosing a file.
         return name 
     #imgLida = OpenFile() 
-    imgLida = "/home/mateusenrico/Documentos/Insper/CamadaFisica/Projeto 5 - Fragmentacao/img/x.png"
+    imgLida = "/home/mateusenrico/Documentos/Insper/CamadaFisica/Projeto 5 - Fragmentacao/img/vai.png"
     #imgLida = imgEscrita = "/home/vitorsv/Dropbox/Insper/2018.2/Camada Física/CamadaFisica/Projeto 5 - Fragmentacao/img/vai.png"
     #imgLida = imgEscrita = "/home/vitorsv/Dropbox/Insper/2018.2/Camada Física/CamadaFisica/Projeto 5 - Fragmentacao/img/x.png"
     img = open(imgLida,'rb')
@@ -86,14 +86,15 @@ def main():
         maxSize = 255
         number = math.ceil(sizeInteiro/maxSize)
 
-       
-        for i in range(number):
+        i = -1
+        while i < number:
+            i += 1
             time.sleep(1)
             com.sendData(txBufferIMG,4,i)
-            # Atualiza dados da transmissão
+            # Atualiza dados da transmssão
             txSize = com.tx.getStatus()
             print("-------------------------")
-            print('Enviou 4, pacote {}'.format(i+1))
+            print('Enviou 4, pacote {}'.format(i))
             ack = False
             if ack == False:
                 inicio = time.time()
@@ -130,6 +131,7 @@ def main():
             else:
                 print("-------------------------")
                 print("Caso estranho")
+                break
 
 
     time.sleep(3)

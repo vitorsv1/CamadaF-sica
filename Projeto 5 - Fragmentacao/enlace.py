@@ -56,21 +56,21 @@ class enlace(object):
         """
         pacote,quantidade,len_pays = self.tx.empacota(data,tipo)
         quantidade -= 1
-        print("PACOTE QUE CHEGOU DO EMPACOTA")
-        print(pacote)
+        #print("PACOTE QUE CHEGOU DO EMPACOTA")
+        #print(pacote)
         print("######################################")
         print("VALOR DO ATUAL É {}".format(atual))
         print("QUANTIDADE: {}".format(quantidade))
         if tipo == 4:
             if atual == 0:
                 print('entrou 0')
-                mensagem = pacote[:(10+len_pays[atual])]
+                mensagem = pacote[:(8+len_pays[atual])]
             elif atual == quantidade:
                 print('entrou quantidade')
-                mensagem = pacote[(10+len_pays[atual-1]+1):]
+                mensagem = pacote[(8+len_pays[atual-1]):]
             else:
                 print('entrou resto')
-                mensagem = pacote[(10+len_pays[atual-1])+1:(10+len_pays[atual])]
+                mensagem = pacote[(8+len_pays[atual-1])+1:(8+len_pays[atual])]
         else:
             mensagem = pacote
 
