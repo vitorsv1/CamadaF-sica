@@ -59,6 +59,7 @@ class enlace(object):
         print(pacote)
         print("######################################")
         print("VALOR DO ATUAL É {}".format(atual))
+        print("QUANTIDADE: {}".format(quantidade))
         if tipo == 4:
             if atual == 0:
                 print('entrou 0')
