@@ -186,14 +186,15 @@ class RX(object):
 
 
         pay = dadoFiltro[headSize:flagEop]
+        print(pay)
         corretoCRC = False
         crc=CRC16().calculate(pay)
         print("&&&&&&&&&&&&")
         print(crc)
-        #crc_veio = int.from_bytes(head[4:6],byteorder='big')
-        CRCZAO = head[4] << 8 + head[5]
-        print(CRCZAO)
-        if crc == CRCZAO:
+        crc_veio = int.from_bytes(head[4:6],byteorder='big')
+        #CRCZAO = head[4] << 8 + head[5]
+        print(crc_veio)
+        if crc == crc_veio:
             corretoCRC = True
         
         if count == len(flagStuff):
