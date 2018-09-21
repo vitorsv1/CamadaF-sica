@@ -184,8 +184,10 @@ class RX(object):
             dadoFiltro = dado
         flagEop -= count * 2
 
+
+        pay = dadoFiltro[headSize:flagEop]
         corretoCRC = False
-        crc=CRC16().calculate(dadoFiltro)
+        crc=CRC16().calculate(pay)
         print("&&&&&&&&&&&&")
         print(crc)
         #crc_veio = int.from_bytes(head[4:6],byteorder='big')
@@ -206,7 +208,6 @@ class RX(object):
             correto = True
 
         if correto:
-            pay = dadoFiltro[headSize:flagEop]
             #print("envio correto")
             erro = 0
             return pay,tipo,erro,pacote,maxPacotes
