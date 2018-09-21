@@ -125,7 +125,7 @@ class RX(object):
     def desempacota(self,dado):
         # Info
         headSize = 6
-        headType = 5
+        headType = 6
         count = 0
         head = bytearray()
         pay = bytearray()
@@ -135,7 +135,7 @@ class RX(object):
         for i in dado:
             if count < headType:
                 #print(i)
-                if count == 5:
+                if count == 6:
                     head.extend(i.to_bytes(1,'big'))
                 else:
                     head.extend(i.to_bytes(1,'big'))
@@ -187,7 +187,6 @@ class RX(object):
         corretoCRC = False
         crc=CRC16().calculate(dadoFiltro)
         print("&&&&&&&&&&&&")
-        print(head[4]+head[5])
         print(crc)
         crc_veio = int.from_bytes(head[4:6],byteorder='big')
         asd = (hex(head[4] << 8 + head[5]))
