@@ -135,7 +135,7 @@ class RX(object):
         for i in dado:
             if count < headType:
                 #print(i)
-                if count == 5
+                if count == 5:
                     head.extend(i.to_bytes(1,'big'))
                 else:
                     head.extend(i.to_bytes(1,'big'))
