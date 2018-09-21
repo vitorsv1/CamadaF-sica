@@ -196,8 +196,8 @@ class RX(object):
         if count == len(flagStuff):
             corretoStuff = True
 
-        #print ("Subtracao {}".format(flagEop-headSize))
-        #print("Tamanho {}".format(tamanho))
+        print ("Subtracao {}".format(flagEop-headSize))
+        print("Tamanho {}".format(tamanho))
         if (flagEop - headSize) == tamanho:
             corretoPay = True
 
