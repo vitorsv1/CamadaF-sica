@@ -99,19 +99,33 @@ def main():
                     print("PEGANDO BUFFER NOVO TIPO 4")
                     rxBuffer, rxTipo, rxErro, rxPacote, maxPacotes = com.rx.getNData()
 
-                else:
-                    time.sleep(1)
-                    com.sendData(0,8,i)
-                    print("Envio 8, repedindo {}".format(i))
-                    inicio = time.time()
-                    timeout = 0
-                    while com.rx.getIsEmpty():
-                        timeout = time.time() - inicio
-                        if timeout >= 5:
-                            time.sleep(1)
-                            com.sendData(0,8,i)
-                            inicio = time.time()
-                        estado = com.rx.getIsEmpty()
+                else: 
+                    if rxErro == 4:
+                        time.sleep(1)
+                        com.sendData(0,9,i)
+                        print("Envio 9, repedindo {}".format(i))
+                        inicio = time.time()
+                        timeout = 0
+                        while com.rx.getIsEmpty():
+                            timeout = time.time() - inicio
+                            if timeout >= 5:
+                                time.sleep(1)
+                                com.sendData(0,9,i)
+                                inicio = time.time()
+                            estado = com.rx.getIsEmpty()
+                    else:
+                        time.sleep(1)
+                        com.sendData(0,8,i)
+                        print("Envio 8, repedindo {}".format(i))
+                        inicio = time.time()
+                        timeout = 0
+                        while com.rx.getIsEmpty():
+                            timeout = time.time() - inicio
+                            if timeout >= 5:
+                                time.sleep(1)
+                                com.sendData(0,8,i)
+                                inicio = time.time()
+                            estado = com.rx.getIsEmpty()
                 rxBuffer, rxTipo, rxErro, rxPacote, maxPacotes = com.rx.getNData()
             
             print("REPETE")

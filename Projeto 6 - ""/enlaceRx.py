@@ -215,3 +215,6 @@ class RX(object):
                 #print("erro na remocao do stuff")
                 erro = 3
                 return -1,tipo,erro,pacote,maxPacotes
+            elif not corretoCRC:
+                erro = 4
+                return -1,tipo,erro,pacote,maxPacotes

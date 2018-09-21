@@ -126,6 +126,11 @@ def main():
                 print("Chegou 8, reenviando 4, pacote {}".format(i))
                 time.sleep(1)
                 pass
+            elif rxTipo == 9:
+                print("-------------------------")
+                print("Chegou 9, erro de CRC, reenviando 4, pacote {}".format(i))
+                time.sleep(1)
+                pass
             else:
                 print("-------------------------")
                 print("Caso estranho")
