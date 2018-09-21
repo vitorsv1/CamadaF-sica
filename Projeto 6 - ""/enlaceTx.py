@@ -156,16 +156,16 @@ class TX(object):
                     cargaFiltro = carga
 
                 pay.extend(bytes(cargaFiltro))
-            
+                crc=CRC16().calculate(cargaFiltro)
             else:
                 atual = 0
                 number = 1
                 size = 1
                 pay.extend(dado.to_bytes(1,'big'))
+                crc=CRC16().calculate(str(dado))
             # HEAD
             #So foi dado extend
 
-            crc=CRC16().calculate(pay)
 
             # EOP
             primeiro = 255 #maxSize
