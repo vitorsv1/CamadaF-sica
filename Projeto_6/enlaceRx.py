@@ -190,6 +190,7 @@ class RX(object):
         print(crc)
         crc_veio = int.from_bytes(head[4:6],byteorder='big')
         asd = (hex(head[4] << 8 + head[5]))
+        print(crc_veio)
         if crc == crc_veio:
             corretoCRC = True
         
