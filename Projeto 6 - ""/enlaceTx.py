@@ -190,7 +190,7 @@ class TX(object):
             #print(count)
             len_pays.append(len(pay))
 
-        overhead = (6 + maxSize + 4) / maxSize
+        overhead = (4 + maxSize + 4) / maxSize
         print("Overhead: {}%".format(overhead*100))
 
         return(envio,number,len_pays)

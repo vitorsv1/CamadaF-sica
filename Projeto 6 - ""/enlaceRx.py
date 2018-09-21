@@ -167,7 +167,7 @@ class RX(object):
                         else:
                             corretoEop = True
                             flagEop = i
-                            print("INTERNO FLAG: {}".format(flagEop))
+                            #print("INTERNO FLAG: {}".format(flagEop))
                             break
 
         dadoFiltro = bytearray()
@@ -183,14 +183,14 @@ class RX(object):
             dadoFiltro = dado
 
         flagEop -= count * 2
-        print("Indice do EOP")
-        print(flagEop)
+        #print("Indice do EOP")
+        #print(flagEop)
         
         if count == len(flagStuff):
             corretoStuff = True
 
-        print ("Subtracao {}".format(flagEop-headSize))
-        print("Tamanho {}".format(tamanho))
+        #print ("Subtracao {}".format(flagEop-headSize))
+        #print("Tamanho {}".format(tamanho))
         if (flagEop - headSize) == tamanho:
             corretoPay = True
 
@@ -199,20 +199,19 @@ class RX(object):
 
         if correto:
             pay = dadoFiltro[headSize:flagEop]
-            print("envio correto")
+            #print("envio correto")
             erro = 0
             return pay,tipo,erro,pacote,maxPacotes
         else:
             if not corretoPay:
-                print("erro no tamanho do payload")
+                #print("erro no tamanho do payload")
                 erro = 1
-                print()
                 return -1,tipo,erro,pacote,maxPacotes
             elif not corretoEop:
-                print("erro no EOP")
+                #print("erro no EOP")
                 erro = 2
                 return -1,tipo,erro,pacote,maxPacotes
             elif not corretoStuff:
-                print("erro na remocao do stuff")
+                #print("erro na remocao do stuff")
                 erro = 3
                 return -1,tipo,erro,pacote,maxPacotes

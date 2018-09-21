@@ -59,16 +59,16 @@ class enlace(object):
         quantidade -= 1
         #print("PACOTE QUE CHEGOU DO EMPACOTA")
         #print(pacote)
-        print("######################################")
-        print("VALOR DO ATUAL É {}".format(atual))
-        print("QUANTIDADE: {}".format(quantidade))
+        #print("######################################")
+        #print("VALOR DO ATUAL É {}".format(atual))
+        #print("QUANTIDADE: {}".format(quantidade))
         #print(pacote)
         if tipo == 4:
             if atual == 0:
-                print('entrou 0')
+                print('atual é  0')
                 mensagem = pacote[:(8+len_pays[atual])]
             elif atual == quantidade:
-                print('entrou quantidade')
+                print('atual = quantidade')
                 mensagem = pacote[(8+len_pays[atual-1]):]
             else:
                 print('entrou resto')
@@ -79,8 +79,8 @@ class enlace(object):
         self.tx.sendBuffer(mensagem)
         time.sleep(1)
         throughput = len(pacote)/self.fisica.tempo
-        print("Mensagem a ser enviada")
-        print(mensagem)
+        #print("Mensagem a ser enviada")
+        #print(mensagem)
         print("Throughput: {} kB/s".format(throughput/1024))
 
     def getData(self, size):
