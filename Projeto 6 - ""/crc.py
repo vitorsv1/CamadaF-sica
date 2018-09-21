@@ -8,4 +8,4 @@ from PyCRC.CRCCCITT import CRCCCITT
 
 data = '0xF3'
 dado = '123'
-print(CRCCCITT().calculate(data))
+print(CRC16().calculate(data))
