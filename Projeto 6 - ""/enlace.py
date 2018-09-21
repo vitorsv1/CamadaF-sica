@@ -66,13 +66,13 @@ class enlace(object):
         if tipo == 4:
             if atual == 0:
                 print('atual é  0')
-                mensagem = pacote[:(8+len_pays[atual])]
+                mensagem = pacote[:(10+len_pays[atual])]
             elif atual == quantidade:
                 print('atual = quantidade')
-                mensagem = pacote[(8+len_pays[atual-1]):]
+                mensagem = pacote[(10+len_pays[atual-1]):]
             else:
                 print('entrou resto')
-                mensagem = pacote[(8+len_pays[atual-1]):(8+len_pays[atual])]
+                mensagem = pacote[(10+len_pays[atual-1]):(10+len_pays[atual])]
         else:
             mensagem = pacote
 

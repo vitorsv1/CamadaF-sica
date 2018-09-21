@@ -124,8 +124,8 @@ class RX(object):
     #----------------Metodos-Novos----------------#
     def desempacota(self,dado):
         # Info
-        headSize = 4
-        headType = 4
+        headSize = 6
+        headType = 5
         count = 0
         head = bytearray()
         pay = bytearray()
@@ -135,7 +135,7 @@ class RX(object):
         for i in dado:
             if count < headType:
                 #print(i)
-                if count == 0 or count == 1:
+                if count == 5
                     head.extend(i.to_bytes(1,'big'))
                 else:
                     head.extend(i.to_bytes(1,'big'))
@@ -189,8 +189,9 @@ class RX(object):
         print("&&&&&&&&&&&&")
         print(head[4]+head[5])
         print(crc)
-        
-        if crc == (head[4] + head[5]):
+        crc_veio = int.from_bytes(head[4:6],byteorder='big')
+        asd = (hex(head[4] << 8 + head[5]))
+        if crc == crc_veio:
             corretoCRC = True
         
         if count == len(flagStuff):
