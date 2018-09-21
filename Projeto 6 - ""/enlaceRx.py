@@ -9,6 +9,7 @@
 
 # Importa pacote de tempo
 import time
+from PyCRC.CRC16 import CRC16
 
 # Threads
 import threading
@@ -181,10 +182,16 @@ class RX(object):
                 count += 1
         else:
             dadoFiltro = dado
-
         flagEop -= count * 2
-        #print("Indice do EOP")
-        #print(flagEop)
+
+        corretoCRC = False
+        crc=CRC16().calculate(dadoFiltro)
+        print("&&&&&&&&&&&&")
+        print(head[4]+head[5])
+        print(crc)
+        
+        if crc == (head[4] + head[5]):
+            corretoCRC = True
         
         if count == len(flagStuff):
             corretoStuff = True
@@ -194,7 +201,7 @@ class RX(object):
         if (flagEop - headSize) == tamanho:
             corretoPay = True
 
-        if corretoPay and corretoEop and corretoStuff:
+        if corretoPay and corretoEop and corretoStuff and corretoCRC:
             correto = True
 
         if correto:

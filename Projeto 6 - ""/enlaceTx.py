@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+  #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #####################################################
 # Camada Física da Computação
@@ -10,6 +10,7 @@
 # Importa pacote de tempo e math
 import time
 import math
+from PyCRC.CRC16 import CRC16
 
 # Threads
 import threading
@@ -164,6 +165,8 @@ class TX(object):
             # HEAD
             #So foi dado extend
 
+            crc=CRC16().calculate(cargaFiltro)
+
             # EOP
             primeiro = 255 #maxSize
             segundo = 254 #maxSize - 1
@@ -175,6 +178,7 @@ class TX(object):
             head.extend(tipo.to_bytes(1,'big'))
             head.extend(atual.to_bytes(1,'big'))
             head.extend((number-1).to_bytes(1,'big'))
+            head.extend(crc.to_bytes(2,'big'))
 
             eop.extend(primeiro.to_bytes(1,'big'))
             eop.extend(segundo.to_bytes(1,'big'))

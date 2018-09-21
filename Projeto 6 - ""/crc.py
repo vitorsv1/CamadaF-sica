@@ -6,6 +6,9 @@ from PyCRC.CRC16Kermit import CRC16Kermit
 from PyCRC.CRC32 import CRC32
 from PyCRC.CRCCCITT import CRCCCITT
 
-data = '0xF3'
-dado = '123'
+imgLida = "/home/mateusenrico/Documentos/Insper/CamadaFisica/Projeto 5 - Fragmentacao/img/x.png"
+img = open(imgLida,'rb')
+txBufferIMG = img.read()
+data = txBufferIMG
+#data = str(txBufferIMG)
 print(CRC16().calculate(data))
