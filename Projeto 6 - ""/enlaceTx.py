@@ -165,7 +165,7 @@ class TX(object):
             # HEAD
             #So foi dado extend
 
-            crc=CRC16().calculate(cargaFiltro)
+            crc=CRC16().calculate(pay)
 
             # EOP
             primeiro = 255 #maxSize
