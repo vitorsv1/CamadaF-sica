@@ -1,6 +1,5 @@
 import signalTeste as st
 import sounddevice as sd
-from collections import defaultdict
 
 if __name__ == "__main__":
     SM = st.signalMeu()
@@ -30,13 +29,8 @@ if __name__ == "__main__":
         except:
             x = [120,560] #Mensagem de erro caso seja inputado um numero nao presente no dicionario
             print("Esse número/letra não existe")
-        #print(x[0])
         x1,s1= SM.generateSin(x[0],10,0.35,44100)
         x1,s2= SM.generateSin(x[1],10,0.35,44100)
-        s = []
-        for i in range(len(s1)):
-            s.append(s1[i]+s2[i])
+        s = s1+s2
         sd.play(s) #Tocar as duas frequencias juntas
         sd.wait()
-    
-    print('sugma')
