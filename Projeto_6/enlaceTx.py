@@ -162,9 +162,8 @@ class TX(object):
                 number = 1
                 size = 1
                 pay.extend(dado.to_bytes(1,'big'))
-                forcado = 0
                 #crc=CRC16().calculate(str(dado))
-                crc = forcado.to_bytes(2,'big')
+                crc = 0
             # HEAD
             #So foi dado extend
 

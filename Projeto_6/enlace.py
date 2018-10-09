@@ -72,7 +72,7 @@ class enlace(object):
                 mensagem = pacote[(10+len_pays[atual-1]):]
             else:
                 print('entrou resto')
-                mensagem = pacote[(10+len_pays[atual-1]):(10+len_pays[atual])]
+                mensagem = pacote[(10+len_pays[atual-1]):(10+len_pays[atual])-1]
         else:
             mensagem = pacote
 

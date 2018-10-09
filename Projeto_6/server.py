@@ -83,7 +83,7 @@ def main():
         print("tentado transmitir .... {} bytes".format(txLenIMG)) ### data
 
         sizeInteiro = len(txBufferIMG)
-        maxSize = 255
+        maxSize = 128
         number = math.ceil(sizeInteiro/maxSize)
 
         i = 0
