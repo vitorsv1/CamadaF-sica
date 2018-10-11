@@ -29,8 +29,9 @@ if __name__ == "__main__":
         except:
             x = [120,560] #Mensagem de erro caso seja inputado um numero nao presente no dicionario
             print("Esse número/letra não existe")
-        x1,s1= SM.generateSin(x[0],10,0.35,44100)
-        x1,s2= SM.generateSin(x[1],10,0.35,44100)
+        x1,s1= SM.generateSin(x[0],10,5,44100)
+        x1,s2= SM.generateSin(x[1],10,5,44100)
         s = s1+s2
         sd.play(s) #Tocar as duas frequencias juntas
         sd.wait()
+        SM.plotFFT(s,44100)
