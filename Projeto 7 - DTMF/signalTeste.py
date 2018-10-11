@@ -29,10 +29,15 @@ class signalMeu:
 
     def plotFFT(self, signal, fs):
         x,y = self.calcFFT(signal, fs)
+        indexes = peakutils.indexes(y, thres=0.3, min_dist=100)
+        print(indexes)
+        #print(x[np.argmax(y)])
+        print()
         plt.figure()
         plt.plot(x, np.abs(y))
         plt.title('Fourier')
         plt.show()
+
 
 if __name__ == "__main__":
     SM = signalMeu()
