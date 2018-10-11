@@ -1,4 +1,5 @@
-#from pynput.keyboard import Key, Listener
+#Author - Vitor "MAD Suiton" // Folgs "NeoNsideW"
+
 import pyautogui
 from pynput import keyboard
 
