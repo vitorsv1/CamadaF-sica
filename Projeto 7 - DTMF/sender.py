@@ -1,9 +1,13 @@
+#Authors - Arthur Olga e Vitor Satyro
+
 import signalTeste as st
 import sounddevice as sd
+import keyboard as kb
 
-if __name__ == "__main__":
+def main():
+    print("Começou...")
+    Hearing = True
     SM = st.signalMeu()
-    penis = []
     sd.default.samplerate =  44100
     freq_dict = {'0':[941, 1336],
                 '1':[697,1209],
@@ -21,17 +25,24 @@ if __name__ == "__main__":
                 'D':[941, 1633],
                 'X':[941, 1209],
                 '#':[941, 1477],}
-    while True:
-        n = input("Qual numero/letra? ")
-        try:
-            x = freq_dict[n.capitalize()] #Pegar as duas frequencias relativas ao valor
-            #Existem casos de A B C D X e #
-        except:
-            x = [120,560] #Mensagem de erro caso seja inputado um numero nao presente no dicionario
-            print("Esse número/letra não existe")
-        x1,s1= SM.generateSin(x[0],10,5,44100)
-        x1,s2= SM.generateSin(x[1],10,5,44100)
-        s = s1+s2
-        sd.play(s) #Tocar as duas frequencias juntas
-        sd.wait()
-        SM.plotFFT(s,44100)
+    while Hearing:  
+        for k in freq_dict.keys(): #Lendo cada chave do dicionário
+            if kb.is_pressed(k): #Se uma chave do freq_dict for pressionada no telcado
+                print('You Pressed A Key!')
+                x = freq_dict[k.capitalize()] #Deixa a letra pressionada em maiuscula
+                x1,s1= SM.generateSin(x[0],10,0.3,44100)
+                x1,s2= SM.generateSin(x[1],10,0.3,44100)
+                s = s1+s2
+                sd.play(s) #Tocar as duas frequencias juntas
+                sd.wait()
+                #SM.plotFFT(s,44100)
+                break
+            if kb.is_pressed("/"): #Para sair do loop usa-se "/"
+                Hearing = False 
+                break 
+            else:
+                pass
+
+
+if __name__ == "__main__":
+    main()
