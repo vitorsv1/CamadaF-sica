@@ -37,7 +37,7 @@ def main():
                 sd.wait()
                 #SM.plotFFT(s,44100)
                 break
-            if kb.is_pressed("/"): #Para sair do loop usa-se "/"
+            if kb.is_pressed("esc"): #Para sair do loop usa-se "/"
                 Hearing = False 
                 break 
             else:
