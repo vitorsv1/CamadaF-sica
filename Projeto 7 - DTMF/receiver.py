@@ -1,6 +1,10 @@
 import signalTeste as st
 import sounddevice as sd
 import math
+import numpy
+import peakutils
+from peakutils.plot import plot as pplot
+from matplotlib import pyplot as plt
 
 if __name__ == "__main__":
     SM = st.signalMeu()
@@ -36,10 +40,13 @@ if __name__ == "__main__":
         for i in myrecording:
             s.append(i[0])
         peaks = SM.getFFT(s,44100)
+        
         for i in range(len(peaks)-1):
             for j in freq_dict:
                 #if peaks[i]==j[0] and peaks[i+1]==j[1]:
                 z = freq_dict[j]
                 if math.isclose(peaks[i], z[0], rel_tol=0) and math.isclose(peaks[i+1], z[1], rel_tol=0):
                     print("Tecla apertada " + j)
+                    SM.plotFFT(s,44100)
+                    
                 
