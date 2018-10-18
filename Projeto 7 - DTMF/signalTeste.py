@@ -4,7 +4,7 @@ import sounddevice as sd
 import matplotlib.pyplot as plt
 from scipy.fftpack import fft
 from scipy import signal as window
-
+import peakutils
 
 
 class signalMeu:
@@ -37,7 +37,12 @@ class signalMeu:
         plt.plot(x, np.abs(y))
         plt.title('Fourier')
         plt.show()
-
+        
+    def getFFT(self, signal, fs):
+        x,y = self.calcFFT(signal, fs)
+        indexes = peakutils.indexes(y, thres=0.3, min_dist=100)
+        print(indexes)
+        return indexes
 
 if __name__ == "__main__":
     SM = signalMeu()
