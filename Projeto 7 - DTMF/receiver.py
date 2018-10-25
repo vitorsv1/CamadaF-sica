@@ -30,6 +30,7 @@ if __name__ == "__main__":
     sd.default.channels = 1
     myarray = int(duration * fs)
     while True:
+        print("-----------------------------------------------------")
         print("start")
         myrecording = sd.rec(myarray, samplerate=fs, channels=1)
         sd.wait()

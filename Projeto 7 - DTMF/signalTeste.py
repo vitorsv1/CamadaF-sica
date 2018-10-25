@@ -45,6 +45,7 @@ class signalMeu:
     def getFFT(self, signal, fs):
         x,y = self.calcFFT(signal, fs)
         indexes = peakutils.indexes(y, thres=0.2, min_dist=100)
+        print("Os picos detectados são: ")
         print(indexes)
         return indexes
 

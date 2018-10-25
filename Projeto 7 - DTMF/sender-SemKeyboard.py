@@ -4,6 +4,9 @@ import signalTeste as st
 import sounddevice as sd
 import matplotlib.pyplot as plt
 
+time = 2
+
+
 def main():
     print("Começou...")
     Hearing = True
@@ -31,8 +34,8 @@ def main():
             if k == letra.capitalize(): #Se uma chave do freq_dict for pressionada no telcado
                 print('You Pressed A Key!')
                 x = freq_dict[letra.capitalize()] #Deixa a letra pressionada em maiuscula
-                x1,s1= SM.generateSin(x[0],10,2,44100)
-                x1,s2= SM.generateSin(x[1],10,2,44100)
+                x1,s1= SM.generateSin(x[0],10,time,44100)
+                x1,s2= SM.generateSin(x[1],10,time,44100)
                 s = s1+s2
                 sd.play(s) #Tocar as duas frequencias juntas
                 sd.wait()
