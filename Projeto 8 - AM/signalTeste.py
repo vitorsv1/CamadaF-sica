@@ -29,17 +29,17 @@ class signalMeu:
 
     def plotFFT(self, signal, fs):
         x,y = self.calcFFT(signal, fs)
-        indexes = peakutils.indexes(y, thres=0.2, min_dist=100)
+        #indexes = peakutils.indexes(y, thres=0.2, min_dist=100)
         #print(indexes)
-        plt.plot(signal)
-        plt.xlim(0,1000)
-        plt.figure(figsize=(10,6))
-        pplot(x, y, indexes)
-        plt.title('First estimate')
-        plt.xlim(0,2200)
+        #plt.plot(signal)
+        #plt.xlim(0,1000)
+        #plt.figure(figsize=(10,6))
+        #pplot(x, y, indexes)
+        #plt.title('First estimate')
+        #plt.xlim(0,2200)
         #plt.figure()
-        #plt.plot(x, np.abs(y))
-        #plt.title('Fourier')
+        plt.plot(x, np.abs(y))
+        plt.title('Fourier')
         plt.show()
         
     def getFFT(self, signal, fs):
