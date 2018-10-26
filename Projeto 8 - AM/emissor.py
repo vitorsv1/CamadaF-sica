@@ -26,7 +26,7 @@ data = normalize(dataA,max(dataA))
 duracao = len(dataA)/44100
 dataFiltrado = lowpassFilter(data,samplerateWMV)
 x1,s1 = SM.generateSin(freqC,1,duracao, 44100)
-S = s1+dataFiltrado*s1
+S = dataFiltrado*s1
 
 plt.figure()
 plt.title("Audio original no tempo")
